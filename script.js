@@ -217,11 +217,10 @@ const tourGuides = [
         name: "Ashok Kumar",
         image: "https://images.unsplash.com/photo-1566753323558-f4e0952af115?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
         specialty: "Sacred & Spiritual Tours",
-        experience: "14 years",
         languages: "English, Hindi, Bengali",
         rating: 4.9,
         reviews: 287,
-        price: 899,
+        price: 1499,
         location: "Varanasi, Agra, Delhi",
         badge: "Top Rated"
     },
@@ -230,11 +229,10 @@ const tourGuides = [
         name: "Priya Sharma",
         image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
         specialty: "Heritage & Monument Tours",
-        experience: "10 years",
         languages: "English, Hindi, Marathi",
         rating: 4.8,
         reviews: 212,
-        price: 1099,
+        price: 1799,
         location: "Jaipur, Agra, Goa",
         badge: "Expert"
     },
@@ -243,11 +241,10 @@ const tourGuides = [
         name: "Rajesh Nair",
         image: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
         specialty: "Backwater & Nature Tours",
-        experience: "12 years",
         languages: "English, Malayalam, Tamil",
         rating: 4.9,
         reviews: 298,
-        price: 1299,
+        price: 1999,
         location: "Kerala, Goa, Himalayas",
         badge: "Top Rated"
     },
@@ -256,11 +253,10 @@ const tourGuides = [
         name: "Anjali Gupta",
         image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
         specialty: "Food & Cultural Tours",
-        experience: "9 years",
         languages: "English, Hindi, Punjabi",
         rating: 4.7,
         reviews: 176,
-        price: 799,
+        price: 1299,
         location: "Delhi, Jaipur, Varanasi",
         badge: "Popular"
     },
@@ -269,11 +265,10 @@ const tourGuides = [
         name: "Vikram Singh",
         image: "https://images.unsplash.com/photo-1618886614638-80e3c103d31a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
         specialty: "Adventure & Trekking Tours",
-        experience: "13 years",
         languages: "English, Hindi, Nepali",
         rating: 4.8,
         reviews: 243,
-        price: 1499,
+        price: 2499,
         location: "Himalayas, Manali, Rishikesh",
         badge: "Expert"
     },
@@ -282,11 +277,10 @@ const tourGuides = [
         name: "Deepa Bhat",
         image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
         specialty: "Beach & Beach Resorts",
-        experience: "8 years",
         languages: "English, Kannada, Konkani",
         rating: 4.6,
         reviews: 159,
-        price: 999,
+        price: 1599,
         location: "Goa, Kerala, Andaman",
         badge: "Verified"
     },
@@ -295,11 +289,10 @@ const tourGuides = [
         name: "Raj Patel",
         image: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
         specialty: "Spiritual & Heritage Tours",
-        experience: "14 years",
         languages: "English, Hindi, Gujarati",
         rating: 4.9,
         reviews: 278,
-        price: 65,
+        price: 1899,
         location: "Delhi, Jaipur, Varanasi",
         badge: "Top Rated"
     },
@@ -308,11 +301,10 @@ const tourGuides = [
         name: "Meera Desai",
         image: "https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
         specialty: "City & Local Markets Tours",
-        experience: "11 years",
         languages: "English, Gujarati, Hindi",
         rating: 4.7,
         reviews: 201,
-        price: 699,
+        price: 1399,
         location: "Mumbai, Goa, Jaipur",
         badge: "Popular"
     }
@@ -387,10 +379,6 @@ function displayGuides(guides) {
                 <p class="guide-specialty">${guide.specialty}</p>
                 <div class="guide-details">
                     <div class="guide-detail">
-                        <i class="fas fa-briefcase"></i>
-                        <span>${guide.experience} experience</span>
-                    </div>
-                    <div class="guide-detail">
                         <i class="fas fa-language"></i>
                         <span>${guide.languages}</span>
                     </div>
@@ -406,7 +394,7 @@ function displayGuides(guides) {
                     <span>${guide.rating} (${guide.reviews} reviews)</span>
                 </div>
                 <div class="guide-price">
-                    <div class="price-amount">$${guide.price} <span>/ hour</span></div>
+                    <div class="price-amount">₹${guide.price} <span>/ hour</span></div>
                     <button class="book-btn" data-guide-id="${guide.id}" data-guide-name="${guide.name}">
                         Book Now
                     </button>
