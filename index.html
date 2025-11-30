@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Guide - Your Gateway to Adventure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Trip<span>Guide</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-auth">
+            <a href="#" class="wishlist-btn" id="wishlist-btn" title="Wishlist">
+                <i class="fas fa-heart"></i>
+                <span class="wishlist-count" id="wishlist-count">0</span>
+            </a>
+            <button class="nav-btn" id="auth-btn">Login / Sign Up</button>
+            <div class="user-profile" id="user-profile" style="display: none;">
+                <div class="user-dropdown">
+                    <span class="user-name" id="user-name"></span>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <a href="#" class="dropdown-item" id="my-profile">
+                            <i class="fas fa-user"></i> My Profile
+                        </a>
+                        <a href="#" class="dropdown-item" id="my-trips">
+                            <i class="fas fa-suitcase"></i> My Trips
+                        </a>
+                        <a href="#" class="dropdown-item" id="cart">
+                            <i class="fas fa-shopping-cart"></i> Cart
+                        </a>
+                        <a href="#" class="dropdown-item" id="language">
+                            <i class="fas fa-globe"></i> Language
+                        </a>
+                        <a href="#" class="dropdown-item" id="currency">
+                            <i class="fas fa-rupee-sign"></i> Currency
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout-item" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Explore Incredible India With Us</h1>
+            <p>Discover India's breathtaking destinations and create unforgettable memories with our expert local guides</p>
+            <a href="#search" class="hero-btn">Find Your Guide</a>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section" id="search">
+        <div class="search-container">
+            <div class="search-title">
+                <div class="search-icon-decoration">
+                    <i class="fas fa-compass"></i>
+                </div>
+                <h2>Find Your Perfect Tour Guide</h2>
+                <p>Enter your destination and travel details to discover amazing local guides who will make your journey unforgettable</p>
+            </div>
+            <div class="search-box">
+                <div class="search-field">
+                    <label>Destination</label>
+                    <input type="text" id="search-place" placeholder="Where do you want to go?">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="search-field">
+                    <label>Date</label>
+                    <input type="date" id="search-date">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="search-field">
+                    <label>Time</label>
+                    <input type="time" id="search-time">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <button class="search-btn" id="search-button">
+                    <i class="fas fa-search"></i> Search Guides
+                </button>
+            </div>
+            <div class="search-features">
+                <div class="search-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Verified Guides</span>
+                </div>
+                <div class="search-feature">
+                    <i class="fas fa-star"></i>
+                    <span>Top Rated</span>
+                </div>
+                <div class="search-feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure Booking</span>
+                </div>
+                <div class="search-feature">
+                    <i class="fas fa-headset"></i>
+                    <span>24/7 Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tour Guides Results Section -->
+    <section class="guides-section" id="guides-results" style="display: none;">
+        <div class="section-title">
+            <h2>Available Tour Guides</h2>
+            <p id="search-summary">Showing guides for your selected destination</p>
+        </div>
+        <div class="guides-grid" id="guides-grid">
+            <!-- Guide cards will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <p>We offer comprehensive tour packages tailored to your preferences</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-globe"></i>
+                <h3>Guided Tours</h3>
+                <p>Expert local guides who bring destinations to life with fascinating stories and hidden gems</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-hotel"></i>
+                <h3>Premium Accommodation</h3>
+                <p>Handpicked hotels and resorts that guarantee comfort and authentic experiences</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-plane"></i>
+                <h3>Flight Bookings</h3>
+                <p>Hassle-free flight arrangements with the best routes and competitive prices</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-camera"></i>
+                <h3>Photography Tours</h3>
+                <p>Capture stunning moments with our specialized photography-focused expeditions</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-hiking"></i>
+                <h3>Adventure Activities</h3>
+                <p>Thrilling experiences from hiking to water sports for the adventure seekers</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-utensils"></i>
+                <h3>Culinary Experiences</h3>
+                <p>Taste local cuisines and enjoy authentic dining experiences around the world</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section class="destinations" id="destinations">
+        <div class="section-title">
+            <h2>Popular Destinations</h2>
+            <p>Explore our most sought-after travel destinations</p>
+        </div>
+        <div class="destinations-grid">
+            <div class="destination-card">
+                <img src="https://media.istockphoto.com/id/1164329797/photo/hindu-sadhu-sitting-on-a-boat-overlooking-varanasi-city-architecture-at-sunset.jpg?s=612x612&w=0&k=20&c=LbpIHRo7kGT7dbUr6b6UuD1d6P0yCaKZ2lbqo3TY988=" alt="Varanasi Ghats">
+                <div class="destination-overlay">
+                    <h3>Varanasi Ghats</h3>
+                    <p class="price">From ₹12,999</p>
+                    <p class="duration"><i class="far fa-clock"></i> 4 Days / 3 Nights</p>
+                </div>
+            </div>
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Taj Mahal">
+                <div class="destination-overlay">
+                    <h3>Agra - Taj Mahal</h3>
+                    <p class="price">From ₹14,999</p>
+                    <p class="duration"><i class="far fa-clock"></i> 5 Days / 4 Nights</p>
+                </div>
+            </div>
+            <div class="destination-card">
+                <img src="https://www.ethnicrajasthan.com/cdn/shop/articles/thumbnail_IMG_4908.jpg?v=1567068228&width=2048" alt="Jaipur">
+                <div class="destination-overlay">
+                    <h3>Jaipur - Pink City</h3>
+                    <p class="price">From ₹11,999</p>
+                    <p class="duration"><i class="far fa-clock"></i> 3 Days / 2 Nights</p>
+                </div>
+            </div>
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Kerala Backwaters">
+                <div class="destination-overlay">
+                    <h3>Kerala Backwaters</h3>
+                    <p class="price">From ₹15,999</p>
+                    <p class="duration"><i class="far fa-clock"></i> 5 Days / 4 Nights</p>
+                </div>
+            </div>
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Goa Beaches">
+                <div class="destination-overlay">
+                    <h3>Goa Beaches</h3>
+                    <p class="price">From ₹13,999</p>
+                    <p class="duration"><i class="far fa-clock"></i> 4 Days / 3 Nights</p>
+                </div>
+            </div>
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Himalayas">
+                <div class="destination-overlay">
+                    <h3>Himalayas Trekking</h3>
+                    <p class="price">From ₹18,999</p>
+                    <p class="duration"><i class="far fa-clock"></i> 6 Days / 5 Nights</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1585135497273-1a86b09fe70e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="About Us - India Travel">
+                <div class="experience-badge">
+                    <h3>15+</h3>
+                    <p>Years Experience</p>
+                </div>
+            </div>
+            <div class="about-text">
+                <h2>India's Best Tour Guide Agency</h2>
+                <p>With over 15 years of experience in Indian travel industry, Trip Guide has been creating extraordinary travel experiences for thousands of satisfied customers across India. Our passion for exploring India's rich heritage and dedication to excellence makes us your ideal travel partner.</p>
+                <p>We specialize in authentic Indian travel experiences, from the spiritual Ghats of Varanasi to the majestic Himalayas. We believe that travel is about discovering India's true soul, experiencing its diverse cultures, and creating lasting memories.</p>
+                <div class="about-features">
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Expert Local Indian Guides</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Best Price Guarantee</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>24/7 Support</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Customized Indian Tour Packages</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-title">
+            <h2>What Our Travelers Say</h2>
+            <p>Real experiences from our valued customers</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"An absolutely incredible experience! The tour guide was knowledgeable, friendly, and made our trip to Varanasi Ghats unforgettable. Highly recommend Trip Guide!"</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Priya">
+                    <div>
+                        <h4>Priya Sharma</h4>
+                        <span>Varanasi Tour, 2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"The Taj Mahal and Agra tour exceeded all expectations. Every detail was perfectly planned, from accommodations to activities. Will definitely book with them again!"</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Rahul">
+                    <div>
+                        <h4>Rahul Verma</h4>
+                        <span>Agra Tour, 2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>"Best travel agency I've ever worked with! The Kerala backwaters cultural tour was a life-changing experience. Their attention to detail is remarkable."</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Anita">
+                    <div>
+                        <h4>Anita Patel</h4>
+                        <span>Kerala Tour, 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get In Touch</h3>
+                <p>Ready to start your adventure? Contact us today and let us help you plan your dream vacation!</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 Travel Street, Adventure City, AC 12345</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@tripguide.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Working Hours</h4>
+                            <p>Mon - Sat: 9:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form>
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="text" placeholder="Subject">
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Trip Guide</h4>
+                <p>Your trusted partner for extraordinary travel experiences. We turn your travel dreams into reality with personalized tours and exceptional service.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Popular Tours</h4>
+                <ul>
+                    <li><a href="#">European Adventure</a></li>
+                    <li><a href="#">Asian Discovery</a></li>
+                    <li><a href="#">African Safari</a></li>
+                    <li><a href="#">Island Hopping</a></li>
+                    <li><a href="#">Cultural Tours</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Cancellation Policy</a></li>
+                    <li><a href="#">Travel Insurance</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Trip Guide. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="booking-modal">
+        <div class="modal">
+            <h3>Book Your Guide</h3>
+            <p class="guide-name" id="modal-guide-name"></p>
+            <form class="modal-form" id="booking-form">
+                <input type="text" placeholder="Your Full Name" required id="booking-name">
+                <input type="email" placeholder="Your Email" required id="booking-email">
+                <input type="tel" placeholder="Your Phone Number" required id="booking-phone">
+                <input type="number" placeholder="Number of People" min="1" required id="booking-people">
+                <div class="modal-buttons">
+                    <button type="button" class="cancel-btn" id="cancel-booking">Cancel</button>
+                    <button type="submit" class="confirm-btn">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

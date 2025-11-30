@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Trip Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .auth-page {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Left Side - Image/Branding Section */
+        .auth-branding {
+            flex: 1;
+            background: linear-gradient(rgba(10, 26, 58, 0.75), rgba(10, 26, 58, 0.65)),
+                        url('https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            color: white;
+            position: relative;
+        }
+
+        .branding-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .branding-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            margin-bottom: 25px;
+            color: #FF7A00;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .branding-tagline {
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .branding-description {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.8;
+            margin-bottom: 50px;
+        }
+
+        .branding-features {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            text-align: left;
+        }
+
+        .branding-feature {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .branding-feature i {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 122, 0, 0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FF7A00;
+            font-size: 18px;
+        }
+
+        .branding-feature span {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        /* Right Side - Form Section */
+        .auth-form-section {
+            flex: 0 0 480px;
+            background: #F5F5F5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .auth-header {
+            background: #FF7A00;
+            padding: 30px 25px;
+            text-align: center;
+            color: white;
+        }
+
+        .auth-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .auth-header p {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 16px 15px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            color: #666;
+            border: none;
+            background: transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+        }
+
+        .auth-tab:hover {
+            color: #FF7A00;
+        }
+
+        .auth-tab.active {
+            color: #FF7A00;
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #FF7A00;
+        }
+
+        .auth-content {
+            padding: 30px 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #FF7A00;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-group.half {
+            flex: 1;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #FF7A00;
+            cursor: pointer;
+        }
+
+        .remember-me label {
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background: #FF7A00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .auth-btn:hover {
+            background: #e06800;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .forgot-password a {
+            color: #FF7A00;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        .back-link:hover {
+            color: #FF7A00;
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: #FF7A00;
+            cursor: pointer;
+        }
+
+        .terms-checkbox label {
+            font-size: 13px;
+            color: #555;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .terms-checkbox a {
+            color: #FF7A00;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .auth-branding {
+                display: none;
+            }
+
+            .auth-form-section {
+                flex: 1;
+                background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
+            }
+
+            .auth-container {
+                max-width: 420px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-form-section {
+                padding: 20px;
+            }
+
+            .auth-container {
+                border-radius: 10px;
+            }
+
+            .auth-header h1 {
+                font-size: 22px;
+            }
+
+            .auth-content {
+                padding: 25px 20px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-page">
+        <!-- Left Branding Section -->
+        <div class="auth-branding">
+            <div class="branding-content">
+                <h1 class="branding-logo">Trip Guide</h1>
+                <p class="branding-tagline">Discover the Magic of Incredible India</p>
+                <p class="branding-description">
+                    Join thousands of travelers who have explored India's most beautiful destinations with our expert guides and curated experiences.
+                </p>
+                <div class="branding-features">
+                    <div class="branding-feature">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>500+ Destinations across India</span>
+                    </div>
+                    <div class="branding-feature">
+                        <i class="fas fa-users"></i>
+                        <span>Expert Local Tour Guides</span>
+                    </div>
+                    <div class="branding-feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Safe & Secure Booking</span>
+                    </div>
+                    <div class="branding-feature">
+                        <i class="fas fa-star"></i>
+                        <span>4.9★ Rating from 10,000+ Travelers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Form Section -->
+        <div class="auth-form-section">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>Welcome Back!</h1>
+                    <p>Sign in to continue your journey</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab active" data-tab="login">Login</button>
+                    <button type="button" class="auth-tab" data-tab="signup">Create Account</button>
+                </div>
+
+                <div class="auth-content">
+                    <!-- Login Form -->
+                    <form class="auth-form active" id="login-form" data-form="login">
+                        <div class="form-group">
+                            <label for="login-email">Email Address</label>
+                            <input type="email" id="login-email" name="email" placeholder="your@email.com" required>
+                            <div class="error-message" id="login-email-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+                            <div class="error-message" id="login-password-error"></div>
+                        </div>
+
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+
+                        <button type="submit" class="auth-btn">Login</button>
+
+                        <div class="forgot-password">
+                            <a href="#" onclick="resetPassword(event)">Forgot your password?</a>
+                        </div>
+                    </form>
+
+                    <!-- Sign Up Form -->
+                    <form class="auth-form" id="signup-form" data-form="signup">
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="signup-firstname">First Name</label>
+                                <input type="text" id="signup-firstname" name="firstname" placeholder="First name" required>
+                                <div class="error-message" id="signup-firstname-error"></div>
+                            </div>
+                            <div class="form-group half">
+                                <label for="signup-lastname">Last Name</label>
+                                <input type="text" id="signup-lastname" name="lastname" placeholder="Last name" required>
+                                <div class="error-message" id="signup-lastname-error"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup-email">Email Address</label>
+                            <input type="email" id="signup-email" name="email" placeholder="your@email.com" required>
+                            <div class="error-message" id="signup-email-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup-phone">Phone Number</label>
+                            <input type="tel" id="signup-phone" name="phone" placeholder="+91 XXXXX XXXXX" required>
+                            <div class="error-message" id="signup-phone-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup-country">Country</label>
+                            <select id="signup-country" name="country" required>
+                                <option value="">Select your country</option>
+                                <option value="India">🇮🇳 India</option>
+                                <option value="United States">🇺🇸 United States</option>
+                                <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                                <option value="Canada">🇨🇦 Canada</option>
+                                <option value="Australia">🇦🇺 Australia</option>
+                                <option value="Germany">🇩🇪 Germany</option>
+                                <option value="France">🇫🇷 France</option>
+                                <option value="Japan">🇯🇵 Japan</option>
+                                <option value="Singapore">🇸🇬 Singapore</option>
+                                <option value="UAE">🇦🇪 United Arab Emirates</option>
+                                <option value="China">🇨🇳 China</option>
+                                <option value="Russia">🇷🇺 Russia</option>
+                                <option value="Brazil">🇧🇷 Brazil</option>
+                                <option value="South Korea">🇰🇷 South Korea</option>
+                                <option value="Italy">🇮🇹 Italy</option>
+                                <option value="Spain">🇪🇸 Spain</option>
+                                <option value="Netherlands">🇳🇱 Netherlands</option>
+                                <option value="Malaysia">🇲🇾 Malaysia</option>
+                                <option value="Thailand">🇹🇭 Thailand</option>
+                                <option value="Philippines">🇵🇭 Philippines</option>
+                                <option value="Bangladesh">🇧🇩 Bangladesh</option>
+                                <option value="Nepal">🇳🇵 Nepal</option>
+                                <option value="Sri Lanka">🇱🇰 Sri Lanka</option>
+                                <option value="Other">🌍 Other</option>
+                            </select>
+                            <div class="error-message" id="signup-country-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" name="password" placeholder="Create a strong password" required>
+                            <div class="error-message" id="signup-password-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signup-confirm">Confirm Password</label>
+                            <input type="password" id="signup-confirm" name="confirm-password" placeholder="Confirm your password" required>
+                            <div class="error-message" id="signup-confirm-error"></div>
+                        </div>
+
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+
+                        <button type="submit" class="auth-btn">Create Account</button>
+                    </form>
+                </div>
+
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching
+            const tabs = document.querySelectorAll('.auth-tab');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const authHeader = document.querySelector('.auth-header');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tabName = this.dataset.tab;
+
+                    // Update tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Show/hide forms
+                    if (tabName === 'signup') {
+                        loginForm.classList.remove('active');
+                        signupForm.classList.add('active');
+                        authHeader.querySelector('h1').textContent = 'Create Account';
+                        authHeader.querySelector('p').textContent = 'Join us and start your adventure';
+                    } else {
+                        signupForm.classList.remove('active');
+                        loginForm.classList.add('active');
+                        authHeader.querySelector('h1').textContent = 'Welcome Back!';
+                        authHeader.querySelector('p').textContent = 'Sign in to continue your journey';
+                    }
+                });
+            });
+
+            // Login form submission
+            document.getElementById('login-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+
+                if (validateLoginForm(email, password)) {
+                    try {
+                        const response = await fetch(`${API_URL}/auth/login`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email, password })
+                        });
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            showError('login-password-error', data.message || 'Login failed');
+                            return;
+                        }
+
+                        localStorage.setItem('authToken', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        window.location.href = 'index.html';
+                    } catch (error) {
+                        const storedUser = localStorage.getItem('user');
+                        if (storedUser) {
+                            window.location.href = 'index.html';
+                        } else {
+                            showError('login-password-error', 'Login failed. Please create an account first.');
+                        }
+                    }
+                }
+            });
+
+            // Signup form submission
+            document.getElementById('signup-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const firstName = document.getElementById('signup-firstname').value;
+                const lastName = document.getElementById('signup-lastname').value;
+                const email = document.getElementById('signup-email').value;
+                const phone = document.getElementById('signup-phone').value;
+                const country = document.getElementById('signup-country').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm').value;
+
+                const name = firstName + ' ' + lastName;
+
+                if (validateSignupForm(firstName, lastName, email, phone, country, password, confirmPassword)) {
+                    try {
+                        const response = await fetch(`${API_URL}/auth/register`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ name, email, phone, password, country })
+                        });
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            showError('signup-email-error', data.message || 'Registration failed');
+                            return;
+                        }
+
+                        localStorage.setItem('user', JSON.stringify({ name, email, country }));
+                        window.location.href = 'index.html';
+                    } catch (error) {
+                        localStorage.setItem('user', JSON.stringify({ name, email, phone, country }));
+                        window.location.href = 'index.html';
+                    }
+                }
+            });
+        });
+
+        function validateLoginForm(email, password) {
+            let isValid = true;
+            document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none');
+
+            if (!email || !isValidEmail(email)) {
+                showError('login-email-error', 'Please enter a valid email');
+                isValid = false;
+            }
+
+            if (!password || password.length < 6) {
+                showError('login-password-error', 'Password must be at least 6 characters');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function validateSignupForm(firstName, lastName, email, phone, country, password, confirmPassword) {
+            let isValid = true;
+            document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none');
+
+            if (!firstName || firstName.length < 2) {
+                showError('signup-firstname-error', 'First name is required');
+                isValid = false;
+            }
+
+            if (!lastName || lastName.length < 2) {
+                showError('signup-lastname-error', 'Last name is required');
+                isValid = false;
+            }
+
+            if (!email || !isValidEmail(email)) {
+                showError('signup-email-error', 'Please enter a valid email');
+                isValid = false;
+            }
+
+            if (!phone || phone.length < 10) {
+                showError('signup-phone-error', 'Please enter a valid phone number');
+                isValid = false;
+            }
+
+            if (!country) {
+                showError('signup-country-error', 'Please select your country');
+                isValid = false;
+            }
+
+            if (!password || password.length < 6) {
+                showError('signup-password-error', 'Password must be at least 6 characters');
+                isValid = false;
+            }
+
+            if (password !== confirmPassword) {
+                showError('signup-confirm-error', 'Passwords do not match');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showError(elementId, message) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.textContent = message;
+                el.style.display = 'block';
+            }
+        }
+
+        function resetPassword(e) {
+            e.preventDefault();
+            // Password reset feature
+        }
+    </script>
+</body>
+</html>
