@@ -16,6 +16,7 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#stay">Book Stay</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -66,7 +67,10 @@
         <div class="hero-content">
             <h1>Explore Incredible India With Us</h1>
             <p>Discover India's breathtaking destinations and create unforgettable memories with our expert local guides</p>
-            <a href="#search" class="hero-btn">Find Your Guide</a>
+            <div class="hero-buttons">
+                <a href="#search" class="hero-btn">Find Your Guide</a>
+                <a href="#stay" class="hero-btn hero-btn-secondary">Book Your Stay</a>
+            </div>
         </div>
     </section>
 
@@ -225,6 +229,183 @@
                     <h3>Manali</h3>
                     <p class="price">₹4,999 (1-5 persons)</p>
                     <p class="duration"><i class="far fa-clock"></i> 2 Days / 1 Night</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Your Stay Section -->
+    <section class="stay-section" id="stay">
+        <div class="stay-container">
+            <div class="stay-title">
+                <div class="stay-icon-decoration">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <h2>Book Your Stay</h2>
+                <p>Find the perfect accommodation for your journey - from luxury hotels to cozy homestays</p>
+            </div>
+            <div class="stay-search-box">
+                <div class="stay-field">
+                    <label>Location</label>
+                    <input type="text" id="stay-location" placeholder="Where are you going?">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="stay-field">
+                    <label>Check-in</label>
+                    <input type="date" id="stay-checkin">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stay-field">
+                    <label>Check-out</label>
+                    <input type="date" id="stay-checkout">
+                    <i class="fas fa-calendar-minus"></i>
+                </div>
+                <div class="stay-field">
+                    <label>Guests</label>
+                    <select id="stay-guests">
+                        <option value="1">1 Guest</option>
+                        <option value="2" selected>2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5+ Guests</option>
+                    </select>
+                    <i class="fas fa-users"></i>
+                </div>
+                <button class="stay-search-btn" id="stay-search-button">
+                    <i class="fas fa-search"></i> Search Hotels
+                </button>
+            </div>
+            <div class="stay-features">
+                <div class="stay-feature">
+                    <i class="fas fa-percentage"></i>
+                    <span>Best Price Guarantee</span>
+                </div>
+                <div class="stay-feature">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Free Cancellation</span>
+                </div>
+                <div class="stay-feature">
+                    <i class="fas fa-wifi"></i>
+                    <span>Free WiFi</span>
+                </div>
+                <div class="stay-feature">
+                    <i class="fas fa-concierge-bell"></i>
+                    <span>24/7 Service</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Hotels Grid -->
+        <div class="hotels-container">
+            <h3 class="hotels-heading">Featured Accommodations</h3>
+            <div class="hotels-grid" id="hotels-grid">
+                <div class="hotel-card">
+                    <div class="hotel-image">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Luxury Resort">
+                        <span class="hotel-badge">Popular</span>
+                        <button class="hotel-wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="hotel-info">
+                        <div class="hotel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.8</span>
+                            <span class="hotel-reviews">(324 reviews)</span>
+                        </div>
+                        <h4>The Oberoi Udaipur</h4>
+                        <p class="hotel-location"><i class="fas fa-map-marker-alt"></i> Udaipur, Rajasthan</p>
+                        <div class="hotel-amenities">
+                            <span><i class="fas fa-wifi"></i></span>
+                            <span><i class="fas fa-swimming-pool"></i></span>
+                            <span><i class="fas fa-utensils"></i></span>
+                            <span><i class="fas fa-spa"></i></span>
+                        </div>
+                        <div class="hotel-price">
+                            <span class="price-amount">₹12,500</span>
+                            <span class="price-night">/ night</span>
+                        </div>
+                        <button class="hotel-book-btn">Book Now</button>
+                    </div>
+                </div>
+                <div class="hotel-card">
+                    <div class="hotel-image">
+                        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Heritage Hotel">
+                        <span class="hotel-badge featured">Featured</span>
+                        <button class="hotel-wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="hotel-info">
+                        <div class="hotel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.9</span>
+                            <span class="hotel-reviews">(512 reviews)</span>
+                        </div>
+                        <h4>Taj Lake Palace</h4>
+                        <p class="hotel-location"><i class="fas fa-map-marker-alt"></i> Udaipur, Rajasthan</p>
+                        <div class="hotel-amenities">
+                            <span><i class="fas fa-wifi"></i></span>
+                            <span><i class="fas fa-swimming-pool"></i></span>
+                            <span><i class="fas fa-utensils"></i></span>
+                            <span><i class="fas fa-spa"></i></span>
+                        </div>
+                        <div class="hotel-price">
+                            <span class="price-amount">₹28,000</span>
+                            <span class="price-night">/ night</span>
+                        </div>
+                        <button class="hotel-book-btn">Book Now</button>
+                    </div>
+                </div>
+                <div class="hotel-card">
+                    <div class="hotel-image">
+                        <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mountain Resort">
+                        <span class="hotel-badge">Top Rated</span>
+                        <button class="hotel-wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="hotel-info">
+                        <div class="hotel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.7</span>
+                            <span class="hotel-reviews">(289 reviews)</span>
+                        </div>
+                        <h4>The Himalayan Resort</h4>
+                        <p class="hotel-location"><i class="fas fa-map-marker-alt"></i> Manali, Himachal Pradesh</p>
+                        <div class="hotel-amenities">
+                            <span><i class="fas fa-wifi"></i></span>
+                            <span><i class="fas fa-fire"></i></span>
+                            <span><i class="fas fa-utensils"></i></span>
+                            <span><i class="fas fa-mountain"></i></span>
+                        </div>
+                        <div class="hotel-price">
+                            <span class="price-amount">₹8,500</span>
+                            <span class="price-night">/ night</span>
+                        </div>
+                        <button class="hotel-book-btn">Book Now</button>
+                    </div>
+                </div>
+                <div class="hotel-card">
+                    <div class="hotel-image">
+                        <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Beach Resort">
+                        <span class="hotel-badge">New</span>
+                        <button class="hotel-wishlist"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="hotel-info">
+                        <div class="hotel-rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.6</span>
+                            <span class="hotel-reviews">(198 reviews)</span>
+                        </div>
+                        <h4>Goa Beach Resort</h4>
+                        <p class="hotel-location"><i class="fas fa-map-marker-alt"></i> Goa</p>
+                        <div class="hotel-amenities">
+                            <span><i class="fas fa-wifi"></i></span>
+                            <span><i class="fas fa-swimming-pool"></i></span>
+                            <span><i class="fas fa-umbrella-beach"></i></span>
+                            <span><i class="fas fa-cocktail"></i></span>
+                        </div>
+                        <div class="hotel-price">
+                            <span class="price-amount">₹6,200</span>
+                            <span class="price-night">/ night</span>
+                        </div>
+                        <button class="hotel-book-btn">Book Now</button>
+                    </div>
                 </div>
             </div>
         </div>

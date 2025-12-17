@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Tour Guides - Trip Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .search-results-page {
+            padding-top: 100px;
+            min-height: 100vh;
+            background: var(--light-bg);
+        }
+        
+        .search-header {
+            background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
+            padding: 40px 5%;
+            margin-bottom: 40px;
+        }
+        
+        .search-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .search-header h1 {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .search-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        .search-filters {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .filter-group input,
+        .filter-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .filter-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .results-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5% 60px;
+        }
+        
+        .results-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .results-count {
+            font-size: 1.1rem;
+            color: var(--dark-text);
+        }
+        
+        .results-count span {
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sort-options label {
+            color: #666;
+        }
+        
+        .sort-options select {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        
+        .guides-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .no-results h3 {
+            font-size: 1.5rem;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+        
+        .no-results p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .back-home-btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .back-home-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Booking Modal Styles */
+        .booking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .booking-modal .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .booking-modal .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+        
+        .booking-modal .close-modal:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .booking-modal h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .booking-modal p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .booking-modal .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .booking-modal .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .booking-modal .form-group input,
+        .booking-modal .form-group select,
+        .booking-modal .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .booking-modal .form-group input:focus,
+        .booking-modal .form-group select:focus,
+        .booking-modal .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.1);
+        }
+        
+        .booking-modal .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .booking-modal .cancel-btn {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .booking-modal .cancel-btn:hover {
+            background: #f5f5f5;
+            border-color: #ccc;
+        }
+        
+        .booking-modal .confirm-btn {
+            flex: 1;
+            padding: 14px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .booking-modal .confirm-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .search-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .search-filters {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .guides-results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .booking-modal .modal-content {
+                padding: 25px;
+            }
+            
+            .booking-modal .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">Trip<span>Guide</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#destinations">Destinations</a></li>
+            <li><a href="index.html#stay">Book Stay</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-auth">
+            <a href="#" class="wishlist-btn" id="wishlist-btn" title="Wishlist">
+                <i class="fas fa-heart"></i>
+                <span class="wishlist-count" id="wishlist-count">0</span>
+            </a>
+            <button class="nav-btn" id="auth-btn">Login / Sign Up</button>
+            <div class="user-profile" id="user-profile" style="display: none;">
+                <div class="user-dropdown">
+                    <span class="user-name" id="user-name"></span>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <a href="#" class="dropdown-item" id="my-profile">
+                            <i class="fas fa-user"></i> My Profile
+                        </a>
+                        <a href="#" class="dropdown-item" id="my-trips">
+                            <i class="fas fa-suitcase"></i> My Trips
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout-item" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="search-results-page">
+        <!-- Search Header -->
+        <div class="search-header">
+            <div class="search-header-content">
+                <h1><i class="fas fa-compass"></i> Find Your Tour Guide</h1>
+                <p id="search-summary">Search for experienced local guides in your destination</p>
+                
+                <div class="search-filters">
+                    <div class="filter-group">
+                        <label>Destination</label>
+                        <input type="text" id="filter-place" placeholder="Where do you want to go?">
+                    </div>
+                    <div class="filter-group">
+                        <label>Date</label>
+                        <input type="date" id="filter-date">
+                    </div>
+                    <div class="filter-group">
+                        <label>Time</label>
+                        <input type="time" id="filter-time">
+                    </div>
+                    <button class="filter-btn" id="apply-filters">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-container">
+            <div class="results-info">
+                <div class="results-count">
+                    Found <span id="guide-count">0</span> tour guides
+                </div>
+                <div class="sort-options">
+                    <label>Sort by:</label>
+                    <select id="sort-guides">
+                        <option value="rating">Highest Rated</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="reviews">Most Reviews</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="guides-results-grid" id="guides-grid">
+                <!-- Guide cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="booking-modal" id="booking-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>Book Your Guide</h2>
+            <p>You're booking: <strong id="modal-guide-name"></strong></p>
+            <form id="booking-form">
+                <div class="form-group">
+                    <label for="booking-name">Your Name</label>
+                    <input type="text" id="booking-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="booking-email">Email</label>
+                    <input type="email" id="booking-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="booking-phone">Phone</label>
+                    <input type="tel" id="booking-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="booking-date">Tour Date</label>
+                    <input type="date" id="booking-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="booking-hours">Duration (hours)</label>
+                    <select id="booking-hours" required>
+                        <option value="2">2 Hours</option>
+                        <option value="4">4 Hours</option>
+                        <option value="6">6 Hours</option>
+                        <option value="8">Full Day (8 Hours)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="booking-notes">Special Requests</label>
+                    <textarea id="booking-notes" rows="3"></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="cancel-btn" id="cancel-booking">Cancel</button>
+                    <button type="submit" class="confirm-btn">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Tour guides data
+        const tourGuides = [
+            {
+                id: 1,
+                name: "Ashok Kumar",
+                image: "https://images.unsplash.com/photo-1566753323558-f4e0952af115?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Sacred & Spiritual Tours",
+                languages: "English, Hindi, Bengali",
+                rating: 4.9,
+                reviews: 287,
+                price: 1499,
+                location: "Varanasi, Agra, Delhi",
+                badge: "Top Rated"
+            },
+            {
+                id: 2,
+                name: "Priya Sharma",
+                image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Heritage & Monument Tours",
+                languages: "English, Hindi, Marathi",
+                rating: 4.8,
+                reviews: 212,
+                price: 1799,
+                location: "Jaipur, Agra, Goa",
+                badge: "Expert"
+            },
+            {
+                id: 3,
+                name: "Rajesh Nair",
+                image: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Backwater & Nature Tours",
+                languages: "English, Malayalam, Tamil",
+                rating: 4.9,
+                reviews: 298,
+                price: 1999,
+                location: "Kerala, Goa, Himalayas",
+                badge: "Top Rated"
+            },
+            {
+                id: 4,
+                name: "Anjali Gupta",
+                image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Food & Cultural Tours",
+                languages: "English, Hindi, Punjabi",
+                rating: 4.7,
+                reviews: 176,
+                price: 1299,
+                location: "Delhi, Jaipur, Varanasi",
+                badge: "Popular"
+            },
+            {
+                id: 5,
+                name: "Vikram Singh",
+                image: "https://images.unsplash.com/photo-1618886614638-80e3c103d31a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Adventure & Trekking Tours",
+                languages: "English, Hindi, Nepali",
+                rating: 4.8,
+                reviews: 243,
+                price: 2499,
+                location: "Himalayas, Manali, Rishikesh",
+                badge: "Expert"
+            },
+            {
+                id: 6,
+                name: "Deepa Bhat",
+                image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Beach & Beach Resorts",
+                languages: "English, Kannada, Konkani",
+                rating: 4.6,
+                reviews: 159,
+                price: 1599,
+                location: "Goa, Kerala, Andaman",
+                badge: "Verified"
+            },
+            {
+                id: 7,
+                name: "Raj Patel",
+                image: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Spiritual & Heritage Tours",
+                languages: "English, Hindi, Gujarati",
+                rating: 4.9,
+                reviews: 278,
+                price: 1899,
+                location: "Delhi, Jaipur, Varanasi",
+                badge: "Top Rated"
+            },
+            {
+                id: 8,
+                name: "Meera Desai",
+                image: "https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "City & Local Markets Tours",
+                languages: "English, Gujarati, Hindi",
+                rating: 4.7,
+                reviews: 201,
+                price: 1399,
+                location: "Mumbai, Goa, Jaipur",
+                badge: "Popular"
+            }
+        ];
+
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchPlace = urlParams.get('place') || '';
+        const searchDate = urlParams.get('date') || '';
+        const searchTime = urlParams.get('time') || '';
+
+        // Set filter values from URL
+        document.getElementById('filter-place').value = searchPlace;
+        document.getElementById('filter-date').value = searchDate;
+        document.getElementById('filter-time').value = searchTime;
+
+        // Update search summary
+        function updateSearchSummary() {
+            const place = document.getElementById('filter-place').value;
+            const date = document.getElementById('filter-date').value;
+            const time = document.getElementById('filter-time').value;
+            
+            let summary = 'Search for experienced local guides';
+            if (place) {
+                summary = `Showing guides for "${place}"`;
+                if (date) {
+                    const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                    summary += ` on ${formattedDate}`;
+                }
+                if (time) {
+                    summary += ` at ${time}`;
+                }
+            }
+            document.getElementById('search-summary').textContent = summary;
+        }
+
+        // Filter and display guides
+        function filterAndDisplayGuides() {
+            const place = document.getElementById('filter-place').value.toLowerCase();
+            const sortBy = document.getElementById('sort-guides').value;
+            
+            let filteredGuides = tourGuides;
+            
+            if (place) {
+                filteredGuides = tourGuides.filter(guide => 
+                    guide.location.toLowerCase().includes(place) ||
+                    place.includes(guide.location.split(',')[0].toLowerCase().trim())
+                );
+            }
+            
+            // Sort guides
+            switch(sortBy) {
+                case 'rating':
+                    filteredGuides.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'price-low':
+                    filteredGuides.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredGuides.sort((a, b) => b.price - a.price);
+                    break;
+                case 'reviews':
+                    filteredGuides.sort((a, b) => b.reviews - a.reviews);
+                    break;
+            }
+            
+            document.getElementById('guide-count').textContent = filteredGuides.length;
+            displayGuides(filteredGuides);
+            updateSearchSummary();
+        }
+
+        function displayGuides(guides) {
+            const grid = document.getElementById('guides-grid');
+            grid.innerHTML = '';
+            
+            if (guides.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results" style="grid-column: 1 / -1;">
+                        <i class="fas fa-search"></i>
+                        <h3>No guides found</h3>
+                        <p>Try searching for a different destination or check back later.</p>
+                        <a href="index.html" class="back-home-btn">Back to Home</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            guides.forEach((guide, index) => {
+                const card = document.createElement('div');
+                card.className = 'guide-card';
+                card.innerHTML = `
+                    <div class="guide-image">
+                        <img src="${guide.image}" alt="${guide.name}">
+                        <span class="guide-badge">${guide.badge}</span>
+                    </div>
+                    <div class="guide-info">
+                        <h3>${guide.name}</h3>
+                        <p class="guide-specialty">${guide.specialty}</p>
+                        <div class="guide-details">
+                            <div class="guide-detail">
+                                <i class="fas fa-language"></i>
+                                <span>${guide.languages}</span>
+                            </div>
+                            <div class="guide-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${guide.location}</span>
+                            </div>
+                        </div>
+                        <div class="guide-rating">
+                            <span class="stars">${generateStars(guide.rating)}</span>
+                            <span>${guide.rating} (${guide.reviews} reviews)</span>
+                        </div>
+                        <div class="guide-price">
+                            <div class="price-amount">₹${guide.price} <span>/ hour</span></div>
+                            <button class="book-btn" data-guide-id="${guide.id}" data-guide-name="${guide.name}">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+                
+                // Animate in
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+            
+            // Add book button listeners
+            document.querySelectorAll('.book-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    openBookingModal(this.getAttribute('data-guide-name'));
+                });
+            });
+        }
+
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            let html = '';
+            for (let i = 0; i < fullStars; i++) html += '<i class="fas fa-star"></i>';
+            if (hasHalfStar) html += '<i class="fas fa-star-half-alt"></i>';
+            const empty = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < empty; i++) html += '<i class="far fa-star"></i>';
+            return html;
+        }
+
+        // Booking modal
+        function openBookingModal(guideName) {
+            document.getElementById('modal-guide-name').textContent = guideName;
+            document.getElementById('booking-modal').style.display = 'flex';
+            document.getElementById('booking-date').value = document.getElementById('filter-date').value;
+        }
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('booking-modal').style.display = 'none';
+        });
+
+        document.getElementById('cancel-booking').addEventListener('click', () => {
+            document.getElementById('booking-modal').style.display = 'none';
+        });
+
+        document.getElementById('booking-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Booking confirmed! You will receive a confirmation email shortly.');
+            document.getElementById('booking-modal').style.display = 'none';
+            document.getElementById('booking-form').reset();
+        });
+
+        // Event listeners
+        document.getElementById('apply-filters').addEventListener('click', () => {
+            const place = document.getElementById('filter-place').value;
+            const date = document.getElementById('filter-date').value;
+            const time = document.getElementById('filter-time').value;
+            
+            // Update URL
+            const params = new URLSearchParams();
+            if (place) params.set('place', place);
+            if (date) params.set('date', date);
+            if (time) params.set('time', time);
+            window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+            
+            filterAndDisplayGuides();
+        });
+
+        document.getElementById('sort-guides').addEventListener('change', filterAndDisplayGuides);
+
+        // User authentication check
+        function checkUserLogin() {
+            const user = localStorage.getItem('user');
+            if (user) {
+                const userData = JSON.parse(user);
+                const authBtn = document.getElementById('auth-btn');
+                const userProfile = document.getElementById('user-profile');
+                const userNameElement = document.getElementById('user-name');
+                
+                const nameParts = userData.name.trim().split(' ');
+                let displayName = nameParts[0];
+                if (nameParts.length > 1) displayName += ' ' + nameParts[1];
+                
+                authBtn.style.display = 'none';
+                userProfile.style.display = 'flex';
+                userNameElement.textContent = 'Hello, ' + displayName;
+            }
+        }
+
+        document.getElementById('auth-btn').addEventListener('click', () => {
+            window.location.href = 'login.html';
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('user');
+            localStorage.removeItem('authToken');
+            location.reload();
+        });
+
+        // Initialize
+        checkUserLogin();
+        filterAndDisplayGuides();
+    </script>
+</body>
+</html>

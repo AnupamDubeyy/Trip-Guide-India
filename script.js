@@ -208,6 +208,34 @@ if (menuToggle) {
     });
 }
 
+// ==================== HOTEL SEARCH FUNCTIONALITY ====================
+
+const staySearchButton = document.getElementById('stay-search-button');
+
+if (staySearchButton) {
+    staySearchButton.addEventListener('click', function() {
+        const location = document.getElementById('stay-location').value;
+        const checkin = document.getElementById('stay-checkin').value;
+        const checkout = document.getElementById('stay-checkout').value;
+        const guests = document.getElementById('stay-guests').value;
+
+        if (!location) {
+            document.getElementById('stay-location').focus();
+            return;
+        }
+
+        // Build URL parameters
+        const params = new URLSearchParams();
+        params.set('location', location);
+        if (checkin) params.set('checkin', checkin);
+        if (checkout) params.set('checkout', checkout);
+        if (guests) params.set('guests', guests);
+
+        // Redirect to search hotels page
+        window.location.href = `search-hotels.html?${params.toString()}`;
+    });
+}
+
 // ==================== TOUR GUIDE SEARCH FUNCTIONALITY ====================
 
 // Sample tour guides data
@@ -310,11 +338,8 @@ const tourGuides = [
     }
 ];
 
-// Search functionality
+// Search functionality - Redirect to search results page
 const searchButton = document.getElementById('search-button');
-const guidesSection = document.getElementById('guides-results');
-const guidesGrid = document.getElementById('guides-grid');
-const searchSummary = document.getElementById('search-summary');
 
 searchButton.addEventListener('click', function() {
     const place = document.getElementById('search-place').value;
@@ -326,41 +351,14 @@ searchButton.addEventListener('click', function() {
         return;
     }
 
-    // Filter guides based on location (simple matching)
-    let filteredGuides = tourGuides.filter(guide => 
-        guide.location.toLowerCase().includes(place.toLowerCase()) ||
-        place.toLowerCase().includes(guide.location.split(',')[0].toLowerCase().trim())
-    );
+    // Build URL parameters
+    const params = new URLSearchParams();
+    params.set('place', place);
+    if (date) params.set('date', date);
+    if (time) params.set('time', time);
 
-    // If no specific match, show all guides
-    if (filteredGuides.length === 0) {
-        filteredGuides = tourGuides;
-    }
-
-    // Update search summary
-    let summaryText = `Showing ${filteredGuides.length} guides for "${place}"`;
-    if (date) {
-        const formattedDate = new Date(date).toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
-        summaryText += ` on ${formattedDate}`;
-    }
-    if (time) {
-        summaryText += ` at ${time}`;
-    }
-    searchSummary.textContent = summaryText;
-
-    // Generate guide cards
-    displayGuides(filteredGuides);
-
-    // Show the guides section
-    guidesSection.style.display = 'block';
-
-    // Scroll to results
-    guidesSection.scrollIntoView({ behavior: 'smooth' });
+    // Redirect to search guides page
+    window.location.href = `search-guides.html?${params.toString()}`;
 });
 
 function displayGuides(guides) {
