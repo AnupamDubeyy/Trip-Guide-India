@@ -240,12 +240,18 @@ nav {
                 url('https://www.tripsavvy.com/thmb/tJ6ruJDKISZf3tZn6jx__HeMUMY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-128253674-592156025f9b58f4c0d79bfd.jpg');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
+}
+
+@media (min-width: 769px) {
+    .hero {
+        background-attachment: fixed;
+    }
 }
 
 .hero-content h1 {
@@ -2019,6 +2025,9 @@ footer {
     .hero {
         min-height: 70vh;
         padding: 60px 20px;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: scroll;
     }
 
     .hero-content h1 {
