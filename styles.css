@@ -13,6 +13,11 @@
     --light-text: #666666;
 }
 
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
@@ -867,10 +872,18 @@ nav {
         padding: 40px 15px;
     }
     
+    .search-container {
+        padding: 0 5px;
+    }
+    
     .search-box {
         grid-template-columns: 1fr;
-        padding: 20px;
+        padding: 20px 15px;
         gap: 15px;
+        border-radius: 15px;
+        margin: 0 auto;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .search-btn {
@@ -884,6 +897,7 @@ nav {
     
     .search-title p {
         font-size: 0.9rem;
+        padding: 0 10px;
     }
     
     .search-title .search-icon-decoration i {
@@ -895,10 +909,14 @@ nav {
         gap: 10px;
         align-items: center;
     }
-}
     
     .search-field input {
         padding: 16px 16px 16px 48px;
+        font-size: 0.95rem;
+    }
+    
+    .search-field label {
+        font-size: 0.75rem;
     }
 }
 
@@ -1605,23 +1623,44 @@ section {
 @media (max-width: 768px) {
     .stay-search-box {
         grid-template-columns: 1fr;
-        padding: 25px;
+        padding: 20px 15px;
+        border-radius: 15px;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .stay-search-btn {
         grid-column: span 1;
+        width: 100%;
     }
     
     .stay-title h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+    
+    .stay-title p {
+        font-size: 0.9rem;
+        padding: 0 10px;
     }
     
     .stay-features {
-        gap: 20px;
+        gap: 15px;
+    }
+    
+    .stay-feature {
+        font-size: 0.85rem;
     }
     
     .hotels-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .stay-container {
+        padding: 0 5px;
+    }
+    
+    .stay-section {
+        padding: 60px 15px;
     }
 }
 
