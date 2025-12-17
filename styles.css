@@ -288,14 +288,14 @@ nav {
 
 .hero-btn-secondary {
     background: transparent;
-    border: 2px solid white;
-    color: white;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
 }
 
 .hero-btn-secondary:hover {
-    background: white;
-    color: var(--primary-color);
-    border-color: white;
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
 }
 
 @keyframes fadeInUp {
