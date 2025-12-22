@@ -248,7 +248,7 @@ const tourGuides = [
         languages: "English, Hindi, Bengali",
         rating: 4.9,
         reviews: 287,
-        price: 1499,
+        price: 799,
         location: "Varanasi, Agra, Delhi",
         badge: "Top Rated"
     },
@@ -260,7 +260,7 @@ const tourGuides = [
         languages: "English, Hindi, Marathi",
         rating: 4.8,
         reviews: 212,
-        price: 1799,
+        price: 749,
         location: "Jaipur, Agra, Goa",
         badge: "Expert"
     },
@@ -272,7 +272,7 @@ const tourGuides = [
         languages: "English, Malayalam, Tamil",
         rating: 4.9,
         reviews: 298,
-        price: 1999,
+        price: 899,
         location: "Kerala, Goa, Himalayas",
         badge: "Top Rated"
     },
@@ -284,7 +284,7 @@ const tourGuides = [
         languages: "English, Hindi, Punjabi",
         rating: 4.7,
         reviews: 176,
-        price: 1299,
+        price: 599,
         location: "Delhi, Jaipur, Varanasi",
         badge: "Popular"
     },
@@ -296,7 +296,7 @@ const tourGuides = [
         languages: "English, Hindi, Nepali",
         rating: 4.8,
         reviews: 243,
-        price: 2499,
+        price: 899,
         location: "Himalayas, Manali, Rishikesh",
         badge: "Expert"
     },
@@ -308,7 +308,7 @@ const tourGuides = [
         languages: "English, Kannada, Konkani",
         rating: 4.6,
         reviews: 159,
-        price: 1599,
+        price: 649,
         location: "Goa, Kerala, Andaman",
         badge: "Verified"
     },
@@ -320,7 +320,7 @@ const tourGuides = [
         languages: "English, Hindi, Gujarati",
         rating: 4.9,
         reviews: 278,
-        price: 1899,
+        price: 849,
         location: "Delhi, Jaipur, Varanasi",
         badge: "Top Rated"
     },
@@ -332,7 +332,7 @@ const tourGuides = [
         languages: "English, Gujarati, Hindi",
         rating: 4.7,
         reviews: 201,
-        price: 1399,
+        price: 549,
         location: "Mumbai, Goa, Jaipur",
         badge: "Popular"
     }
@@ -368,11 +368,8 @@ function displayGuides(guides) {
         const guideCard = document.createElement('div');
         guideCard.className = 'guide-card';
         guideCard.innerHTML = `
-            <div class="guide-image">
-                <img src="${guide.image}" alt="${guide.name}">
-                <span class="guide-badge">${guide.badge}</span>
-            </div>
             <div class="guide-info">
+                <span class="guide-badge">${guide.badge}</span>
                 <h3>${guide.name}</h3>
                 <p class="guide-specialty">${guide.specialty}</p>
                 <div class="guide-details">
