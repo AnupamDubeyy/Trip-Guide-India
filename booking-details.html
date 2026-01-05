@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Guide - Trip Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .booking-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 50%, #0A1A3A 100%);
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .booking-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .booking-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: start;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Guide Info Card */
+        .guide-info-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 100px;
+        }
+
+        .guide-header {
+            background: linear-gradient(135deg, var(--accent-color), #e06800);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .guide-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: white;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .guide-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .guide-header h2 {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .guide-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .guide-details {
+            padding: 35px 30px 30px;
+        }
+
+        .guide-detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .guide-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .guide-detail-item i {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 122, 0, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .guide-detail-item .detail-content h4 {
+            font-size: 0.85rem;
+            color: #888;
+            font-weight: 500;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .guide-detail-item .detail-content p {
+            color: var(--dark-text);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .guide-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .guide-rating .stars {
+            color: #ffc107;
+        }
+
+        .guide-rating span {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .guide-price-display {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            margin: 20px 30px 30px;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .guide-price-display .price-label {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .guide-price-display .price-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .guide-price-display .price-value span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #888;
+        }
+
+        /* Booking Form Card */
+        .booking-form-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
+            padding: 35px 40px;
+            position: relative;
+        }
+
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #FF7A00, #FF9A33, #FF7A00);
+        }
+
+        .form-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: white;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .form-header h2 {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .form-header h2 i {
+            background: var(--accent-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-header p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+            padding-left: 65px;
+        }
+
+        .form-body {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e8ecf1;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: #d0d5dc;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255, 122, 0, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            padding-right: 50px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f2f5;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-cancel:hover {
+            background: #f5f5f5;
+            border-color: #ccc;
+            color: var(--dark-text);
+        }
+
+        .btn-proceed {
+            flex: 1.5;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #e06800 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(255, 122, 0, 0.3);
+        }
+
+        .btn-proceed:hover {
+            background: linear-gradient(135deg, #e06800 0%, var(--primary-color) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 122, 0, 0.4);
+        }
+
+        /* Security badges */
+        .security-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .security-info .badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .security-info .badge i {
+            color: #27ae60;
+        }
+
+        /* Back button */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        .back-link i {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover i {
+            background: var(--accent-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+                padding: 30px 15px 50px;
+            }
+
+            .guide-info-card {
+                position: static;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-body {
+                padding: 30px 25px;
+            }
+
+            .form-header {
+                padding: 30px 25px;
+            }
+
+            .form-buttons {
+                flex-direction: column;
+            }
+
+            .btn-proceed {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">Trip<span>Guide</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#destinations">Destinations</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-auth">
+            <button class="nav-btn" id="auth-btn" onclick="window.location.href='login.html'">Login / Sign Up</button>
+            <div class="user-profile" id="user-profile" style="display: none;">
+                <div class="user-dropdown">
+                    <span class="user-name" id="user-name"></span>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="booking-page">
+        <div class="booking-container">
+            <!-- Guide Info Card -->
+            <div class="guide-info-card">
+                <div class="guide-header">
+                    <img src="" alt="Guide" class="guide-avatar" id="guide-avatar">
+                    <h2 id="guide-name">Guide Name</h2>
+                    <span class="guide-badge" id="guide-badge">Top Rated</span>
+                </div>
+                <div class="guide-details">
+                    <div class="guide-detail-item">
+                        <i class="fas fa-briefcase"></i>
+                        <div class="detail-content">
+                            <h4>Specialty</h4>
+                            <p id="guide-specialty">--</p>
+                        </div>
+                    </div>
+                    <div class="guide-detail-item">
+                        <i class="fas fa-language"></i>
+                        <div class="detail-content">
+                            <h4>Languages</h4>
+                            <p id="guide-languages">--</p>
+                        </div>
+                    </div>
+                    <div class="guide-detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="detail-content">
+                            <h4>Locations</h4>
+                            <p id="guide-locations">--</p>
+                        </div>
+                    </div>
+                    <div class="guide-detail-item">
+                        <i class="fas fa-star"></i>
+                        <div class="detail-content">
+                            <h4>Rating</h4>
+                            <div class="guide-rating">
+                                <span class="stars" id="guide-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </span>
+                                <span id="guide-rating-text">4.9 (287 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="guide-price-display">
+                    <div class="price-label">Price per hour</div>
+                    <div class="price-value">₹<span id="guide-price">799</span> <span>/ hour</span></div>
+                </div>
+            </div>
+
+            <!-- Booking Form Card -->
+            <div class="booking-form-card">
+                <a href="javascript:history.back()" class="back-link" style="position: absolute; top: 100px; left: 20px; z-index: 10;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Guides</span>
+                </a>
+                <div class="form-header">
+                    <h2><i class="fas fa-calendar-check"></i> Book Your Tour</h2>
+                    <p>Fill in your details to proceed with the booking</p>
+                </div>
+                <div class="form-body">
+                    <form id="booking-form">
+                        <div class="form-group">
+                            <label for="booking-name"><i class="fas fa-user"></i> Your Name</label>
+                            <input type="text" id="booking-name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="booking-email"><i class="fas fa-envelope"></i> Email</label>
+                                <input type="email" id="booking-email" placeholder="your@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-phone"><i class="fas fa-phone"></i> Phone</label>
+                                <input type="tel" id="booking-phone" placeholder="+91 98765 43210" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="booking-date"><i class="fas fa-calendar"></i> Tour Date</label>
+                                <input type="date" id="booking-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-hours"><i class="fas fa-clock"></i> Duration</label>
+                                <select id="booking-hours" required>
+                                    <option value="2">2 Hours</option>
+                                    <option value="4">4 Hours</option>
+                                    <option value="6">6 Hours</option>
+                                    <option value="8">Full Day (8 Hours)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-notes"><i class="fas fa-comment-alt"></i> Special Requests</label>
+                            <textarea id="booking-notes" placeholder="Any special requirements or preferences..."></textarea>
+                        </div>
+                        <div class="form-buttons">
+                            <a href="javascript:history.back()" class="btn-cancel">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn-proceed">
+                                <i class="fas fa-lock"></i> Proceed to Payment
+                            </button>
+                        </div>
+                    </form>
+                    <div class="security-info">
+                        <div class="badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure Booking</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-undo"></i>
+                            <span>Free Cancellation</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-headset"></i>
+                            <span>24/7 Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tour guides data
+        const tourGuides = [
+            {
+                id: 1,
+                name: "Ashok Kumar",
+                image: "https://images.unsplash.com/photo-1566753323558-f4e0952af115?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Sacred & Spiritual Tours",
+                languages: "English, Hindi, Bengali",
+                rating: 4.9,
+                reviews: 287,
+                price: 799,
+                location: "Varanasi, Agra, Delhi",
+                badge: "Top Rated"
+            },
+            {
+                id: 2,
+                name: "Priya Sharma",
+                image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Heritage & Monument Tours",
+                languages: "English, Hindi, Marathi",
+                rating: 4.8,
+                reviews: 212,
+                price: 749,
+                location: "Jaipur, Agra, Goa",
+                badge: "Expert"
+            },
+            {
+                id: 3,
+                name: "Rajesh Nair",
+                image: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Backwater & Nature Tours",
+                languages: "English, Malayalam, Tamil",
+                rating: 4.9,
+                reviews: 298,
+                price: 899,
+                location: "Kerala, Goa, Himalayas",
+                badge: "Top Rated"
+            },
+            {
+                id: 4,
+                name: "Anjali Gupta",
+                image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Food & Cultural Tours",
+                languages: "English, Hindi, Punjabi",
+                rating: 4.7,
+                reviews: 176,
+                price: 599,
+                location: "Delhi, Jaipur, Varanasi",
+                badge: "Popular"
+            },
+            {
+                id: 5,
+                name: "Vikram Singh",
+                image: "https://images.unsplash.com/photo-1618886614638-80e3c103d31a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Adventure & Trekking Tours",
+                languages: "English, Hindi, Nepali",
+                rating: 4.8,
+                reviews: 243,
+                price: 899,
+                location: "Himalayas, Manali, Rishikesh",
+                badge: "Expert"
+            },
+            {
+                id: 6,
+                name: "Deepa Bhat",
+                image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Beach & Beach Resorts",
+                languages: "English, Kannada, Konkani",
+                rating: 4.6,
+                reviews: 159,
+                price: 649,
+                location: "Goa, Kerala, Andaman",
+                badge: "Verified"
+            },
+            {
+                id: 7,
+                name: "Raj Patel",
+                image: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "Spiritual & Heritage Tours",
+                languages: "English, Hindi, Gujarati",
+                rating: 4.9,
+                reviews: 278,
+                price: 849,
+                location: "Delhi, Jaipur, Varanasi",
+                badge: "Top Rated"
+            },
+            {
+                id: 8,
+                name: "Meera Desai",
+                image: "https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                specialty: "City & Local Markets Tours",
+                languages: "English, Gujarati, Hindi",
+                rating: 4.7,
+                reviews: 201,
+                price: 549,
+                location: "Mumbai, Goa, Jaipur",
+                badge: "Popular"
+            }
+        ];
+
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const guideId = urlParams.get('guideId');
+        const guideName = urlParams.get('guideName');
+        const searchDate = urlParams.get('date');
+        const searchPlace = urlParams.get('place');
+
+        // Find guide by name or ID
+        let guide = tourGuides.find(g => g.id == guideId) || tourGuides.find(g => g.name === guideName) || tourGuides[0];
+
+        // Populate guide info
+        document.getElementById('guide-avatar').src = guide.image;
+        document.getElementById('guide-name').textContent = guide.name;
+        document.getElementById('guide-badge').textContent = guide.badge;
+        document.getElementById('guide-specialty').textContent = guide.specialty;
+        document.getElementById('guide-languages').textContent = guide.languages;
+        document.getElementById('guide-locations').textContent = guide.location;
+        document.getElementById('guide-rating-text').textContent = `${guide.rating} (${guide.reviews} reviews)`;
+        document.getElementById('guide-price').textContent = guide.price;
+
+        // Set date if provided
+        if (searchDate) {
+            document.getElementById('booking-date').value = searchDate;
+        }
+
+        // Generate stars
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            let html = '';
+            for (let i = 0; i < fullStars; i++) html += '<i class="fas fa-star"></i>';
+            if (hasHalfStar) html += '<i class="fas fa-star-half-alt"></i>';
+            const empty = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < empty; i++) html += '<i class="far fa-star"></i>';
+            return html;
+        }
+
+        document.getElementById('guide-stars').innerHTML = generateStars(guide.rating);
+
+        // Form submission
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('booking-name').value;
+            const email = document.getElementById('booking-email').value;
+            const phone = document.getElementById('booking-phone').value;
+            const date = document.getElementById('booking-date').value;
+            const hours = document.getElementById('booking-hours').value;
+            const notes = document.getElementById('booking-notes').value;
+            
+            const totalPrice = guide.price * parseInt(hours);
+            
+            // Store booking data for payment page
+            const bookingData = {
+                guide: guide.name,
+                name: name,
+                email: email,
+                phone: phone,
+                people: hours + ' hours',
+                destination: searchPlace || guide.location.split(',')[0],
+                date: date || 'To be confirmed',
+                time: 'To be confirmed',
+                price: totalPrice,
+                notes: notes
+            };
+            
+            localStorage.setItem('pendingBooking', JSON.stringify(bookingData));
+            
+            // Redirect to payment page
+            window.location.href = 'payment.html';
+        });
+
+        // Check user login
+        function checkUserLogin() {
+            const user = localStorage.getItem('user');
+            if (user) {
+                const userData = JSON.parse(user);
+                const authBtn = document.getElementById('auth-btn');
+                const userProfile = document.getElementById('user-profile');
+                const userNameElement = document.getElementById('user-name');
+                
+                const nameParts = userData.name.trim().split(' ');
+                let displayName = nameParts[0];
+                if (nameParts.length > 1) displayName += ' ' + nameParts[1];
+                
+                authBtn.style.display = 'none';
+                userProfile.style.display = 'flex';
+                userNameElement.textContent = 'Hello, ' + displayName;
+                
+                // Pre-fill form with user data
+                document.getElementById('booking-name').value = userData.name || '';
+                document.getElementById('booking-email').value = userData.email || '';
+            }
+        }
+
+        checkUserLogin();
+    </script>
+</body>
+</html>

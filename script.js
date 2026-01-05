@@ -412,8 +412,19 @@ function displayGuides(guides) {
     // Add event listeners to book buttons
     document.querySelectorAll('.book-btn').forEach(btn => {
         btn.addEventListener('click', function() {
+            const guideId = this.getAttribute('data-guide-id');
             const guideName = this.getAttribute('data-guide-name');
-            openBookingModal(guideName);
+            const date = document.getElementById('search-date').value;
+            const place = document.getElementById('search-place').value;
+            
+            // Redirect to booking details page
+            const params = new URLSearchParams();
+            params.set('guideId', guideId);
+            params.set('guideName', guideName);
+            if (date) params.set('date', date);
+            if (place) params.set('place', place);
+            
+            window.location.href = `booking-details.html?${params.toString()}`;
         });
     });
 }

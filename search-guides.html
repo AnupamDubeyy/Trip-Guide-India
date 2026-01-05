@@ -908,7 +908,19 @@
             // Add book button listeners
             document.querySelectorAll('.book-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    openBookingModal(this.getAttribute('data-guide-name'));
+                    const guideId = this.getAttribute('data-guide-id');
+                    const guideName = this.getAttribute('data-guide-name');
+                    const date = document.getElementById('filter-date').value;
+                    const place = document.getElementById('filter-place').value;
+                    
+                    // Redirect to booking details page
+                    const params = new URLSearchParams();
+                    params.set('guideId', guideId);
+                    params.set('guideName', guideName);
+                    if (date) params.set('date', date);
+                    if (place) params.set('place', place);
+                    
+                    window.location.href = `booking-details.html?${params.toString()}`;
                 });
             });
         }
