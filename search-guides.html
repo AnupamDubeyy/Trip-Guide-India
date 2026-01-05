@@ -199,7 +199,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(10, 26, 58, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -208,85 +210,168 @@
         }
         
         .booking-modal .modal-content {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 500px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 0;
+            border-radius: 24px;
+            max-width: 520px;
             width: 100%;
             position: relative;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-            animation: modalSlideIn 0.3s ease;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+        
+        .booking-modal .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #FF7A00, #FF9A33, #FF7A00);
         }
         
         @keyframes modalSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-50px) scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
+        }
+        
+        .booking-modal .modal-header {
+            background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
+            padding: 30px 40px 25px;
+            position: relative;
+        }
+        
+        .booking-modal .modal-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 24px 24px 0 0;
         }
         
         .booking-modal .close-modal {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
             width: 40px;
             height: 40px;
-            background: #f5f5f5;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            color: #666;
+            color: white;
             transition: all 0.3s ease;
             line-height: 1;
+            z-index: 10;
         }
         
         .booking-modal .close-modal:hover {
             background: var(--accent-color);
-            color: white;
-            transform: rotate(90deg);
+            border-color: var(--accent-color);
+            transform: rotate(90deg) scale(1.1);
         }
         
         .booking-modal h2 {
             font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
+            color: white;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
-        .booking-modal p {
-            color: #666;
-            margin-bottom: 25px;
+        .booking-modal h2::before {
+            content: '\f073';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 1.4rem;
+            background: var(--accent-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .booking-modal .modal-header p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+            font-size: 0.95rem;
+            padding-left: 57px;
+        }
+        
+        .booking-modal .modal-header p strong {
+            color: #FF9A33;
+            font-weight: 600;
+        }
+        
+        .booking-modal .modal-body {
+            padding: 30px 40px 40px;
         }
         
         .booking-modal .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
+            position: relative;
         }
         
         .booking-modal .form-group label {
             display: block;
             font-weight: 600;
             color: var(--dark-text);
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+        
+        .booking-modal .form-group label::before {
+            margin-right: 8px;
+            color: var(--accent-color);
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+        
+        .booking-modal .form-group:nth-child(1) label::before { content: '\f007'; }
+        .booking-modal .form-group:nth-child(2) label::before { content: '\f0e0'; }
+        .booking-modal .form-group:nth-child(3) label::before { content: '\f095'; }
+        .booking-modal .form-group:nth-child(4) label::before { content: '\f073'; }
+        .booking-modal .form-group:nth-child(5) label::before { content: '\f017'; }
+        .booking-modal .form-group:nth-child(6) label::before { content: '\f4ad'; }
         
         .booking-modal .form-group input,
         .booking-modal .form-group select,
         .booking-modal .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            padding: 14px 18px;
+            border: 2px solid #e8ecf1;
+            border-radius: 12px;
             font-family: inherit;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .booking-modal .form-group input:hover,
+        .booking-modal .form-group select:hover,
+        .booking-modal .form-group textarea:hover {
+            border-color: #d0d5dc;
+            background: white;
         }
         
         .booking-modal .form-group input:focus,
@@ -294,48 +379,94 @@
         .booking-modal .form-group textarea:focus {
             outline: none;
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.1);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255, 122, 0, 0.1);
+        }
+        
+        .booking-modal .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .booking-modal .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 45px;
         }
         
         .booking-modal .modal-buttons {
             display: flex;
             gap: 15px;
             margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid #f0f2f5;
         }
         
         .booking-modal .cancel-btn {
             flex: 1;
-            padding: 14px;
+            padding: 16px;
             border: 2px solid #e0e0e0;
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            color: #666;
         }
         
         .booking-modal .cancel-btn:hover {
             background: #f5f5f5;
             border-color: #ccc;
+            color: var(--dark-text);
         }
         
         .booking-modal .confirm-btn {
-            flex: 1;
-            padding: 14px;
-            background: var(--accent-color);
+            flex: 1.5;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #e06800 100%);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(255, 122, 0, 0.3);
+        }
+        
+        .booking-modal .confirm-btn::before {
+            content: '\f023';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
         }
         
         .booking-modal .confirm-btn:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #e06800 0%, var(--primary-color) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 122, 0, 0.4);
+        }
+        
+        .booking-modal .confirm-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        /* Form row for side by side fields */
+        .booking-modal .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .booking-modal .form-row .form-group {
+            margin-bottom: 22px;
         }
 
         @media (max-width: 768px) {
@@ -356,11 +487,44 @@
             }
             
             .booking-modal .modal-content {
-                padding: 25px;
+                margin: 20px;
+                border-radius: 20px;
+            }
+            
+            .booking-modal .modal-header {
+                padding: 25px 25px 20px;
+            }
+            
+            .booking-modal .modal-body {
+                padding: 25px 25px 30px;
+            }
+            
+            .booking-modal h2 {
+                font-size: 1.5rem;
+            }
+            
+            .booking-modal h2::before {
+                width: 38px;
+                height: 38px;
+                font-size: 1.1rem;
+            }
+            
+            .booking-modal .modal-header p {
+                padding-left: 50px;
+                font-size: 0.85rem;
+            }
+            
+            .booking-modal .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
             }
             
             .booking-modal .modal-buttons {
                 flex-direction: column;
+            }
+            
+            .booking-modal .confirm-btn {
+                order: -1;
             }
         }
     </style>
@@ -463,43 +627,51 @@
     <div class="booking-modal" id="booking-modal">
         <div class="modal-content">
             <span class="close-modal" id="close-modal">&times;</span>
-            <h2>Book Your Guide</h2>
-            <p>You're booking: <strong id="modal-guide-name"></strong></p>
-            <form id="booking-form">
-                <div class="form-group">
-                    <label for="booking-name">Your Name</label>
-                    <input type="text" id="booking-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="booking-email">Email</label>
-                    <input type="email" id="booking-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="booking-phone">Phone</label>
-                    <input type="tel" id="booking-phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="booking-date">Tour Date</label>
-                    <input type="date" id="booking-date" required>
-                </div>
-                <div class="form-group">
-                    <label for="booking-hours">Duration (hours)</label>
-                    <select id="booking-hours" required>
-                        <option value="2">2 Hours</option>
-                        <option value="4">4 Hours</option>
-                        <option value="6">6 Hours</option>
-                        <option value="8">Full Day (8 Hours)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="booking-notes">Special Requests</label>
-                    <textarea id="booking-notes" rows="3"></textarea>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="cancel-btn" id="cancel-booking">Cancel</button>
-                    <button type="submit" class="confirm-btn">Confirm Booking</button>
-                </div>
-            </form>
+            <div class="modal-header">
+                <h2>Book Your Guide</h2>
+                <p>You're booking: <strong id="modal-guide-name"></strong></p>
+            </div>
+            <div class="modal-body">
+                <form id="booking-form">
+                    <div class="form-group">
+                        <label for="booking-name">Your Name</label>
+                        <input type="text" id="booking-name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="booking-email">Email</label>
+                            <input type="email" id="booking-email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-phone">Phone</label>
+                            <input type="tel" id="booking-phone" placeholder="+91 98765 43210" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="booking-date">Tour Date</label>
+                            <input type="date" id="booking-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-hours">Duration</label>
+                            <select id="booking-hours" required>
+                                <option value="2">2 Hours</option>
+                                <option value="4">4 Hours</option>
+                                <option value="6">6 Hours</option>
+                                <option value="8">Full Day (8 Hours)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-notes">Special Requests</label>
+                        <textarea id="booking-notes" rows="3" placeholder="Any special requirements or preferences..."></textarea>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="cancel-btn" id="cancel-booking">Cancel</button>
+                        <button type="submit" class="confirm-btn">Proceed to Payment</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -769,9 +941,40 @@
 
         document.getElementById('booking-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            alert('Booking confirmed! You will receive a confirmation email shortly.');
+            
+            const guideName = document.getElementById('modal-guide-name').textContent;
+            const name = document.getElementById('booking-name').value;
+            const email = document.getElementById('booking-email').value;
+            const phone = document.getElementById('booking-phone').value;
+            const date = document.getElementById('booking-date').value;
+            const hours = document.getElementById('booking-hours').value;
+            const notes = document.getElementById('booking-notes').value;
+            const place = document.getElementById('filter-place').value;
+            
+            // Get guide price
+            const selectedGuideData = tourGuides.find(g => g.name === guideName);
+            const guidePrice = selectedGuideData ? selectedGuideData.price : 799;
+            const totalPrice = guidePrice * parseInt(hours);
+            
+            // Store booking data for payment page
+            const bookingData = {
+                guide: guideName,
+                name: name,
+                email: email,
+                phone: phone,
+                people: hours + ' hours',
+                destination: place || 'To be confirmed',
+                date: date || 'To be confirmed',
+                time: 'To be confirmed',
+                price: totalPrice,
+                notes: notes
+            };
+            
+            localStorage.setItem('pendingBooking', JSON.stringify(bookingData));
+            
+            // Redirect to payment page
             document.getElementById('booking-modal').style.display = 'none';
-            document.getElementById('booking-form').reset();
+            window.location.href = 'payment.html';
         });
 
         // Event listeners

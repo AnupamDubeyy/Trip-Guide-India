@@ -478,24 +478,28 @@ bookingForm.addEventListener('submit', function(e) {
     const date = document.getElementById('search-date').value;
     const time = document.getElementById('search-time').value;
 
-    // Here you would typically send this data to a server
-    const bookingDetails = `
-Booking Confirmed! 🎉
+    // Get guide price from the selected guide (default to 799 if not found)
+    const selectedGuideData = tourGuides.find(g => g.name === selectedGuide);
+    const guidePrice = selectedGuideData ? selectedGuideData.price : 799;
 
-Guide: ${selectedGuide}
-Customer: ${name}
-Email: ${email}
-Phone: ${phone}
-Destination: ${place}
-Date: ${date || 'To be confirmed'}
-Time: ${time || 'To be confirmed'}
-Group Size: ${people} person(s)
+    // Store booking data in localStorage for payment page
+    const bookingData = {
+        guide: selectedGuide,
+        name: name,
+        email: email,
+        phone: phone,
+        people: people,
+        destination: place,
+        date: date || 'To be confirmed',
+        time: time || 'To be confirmed',
+        price: guidePrice
+    };
 
-We will send a confirmation email shortly.
-    `;
+    localStorage.setItem('pendingBooking', JSON.stringify(bookingData));
 
-    // Booking submitted successfully
+    // Close modal and redirect to payment page
     closeBookingModal();
+    window.location.href = 'payment.html';
 });
 
 // Close modal with Escape key
