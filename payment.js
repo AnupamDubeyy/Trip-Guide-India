@@ -36,12 +36,10 @@ function loadBookingData() {
     document.getElementById('summary-destination').textContent = bookingData.destination || '--';
     document.getElementById('summary-date').textContent = bookingData.date || 'To be confirmed';
     document.getElementById('summary-time').textContent = bookingData.time || 'To be confirmed';
-    document.getElementById('summary-people').textContent = bookingData.people ? `${bookingData.people} person(s)` : '--';
+    document.getElementById('summary-people').textContent = bookingData.people || '--';
     
-    // Calculate total (example: base price * number of people)
-    const basePrice = bookingData.price || 799;
-    const people = parseInt(bookingData.people) || 1;
-    const totalAmount = basePrice * people;
+    // Get total amount from booking data (already calculated with service fee)
+    const totalAmount = bookingData.price || 0;
     
     // Update all amount displays
     document.getElementById('summary-total').textContent = `₹${totalAmount.toLocaleString()}`;

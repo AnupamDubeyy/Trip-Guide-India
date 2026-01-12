@@ -181,6 +181,65 @@
             color: #888;
         }
 
+        /* Price Summary Box */
+        .price-summary {
+            background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
+            margin: 0 30px 30px;
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .price-summary h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .price-summary h4 i {
+            color: var(--accent-color);
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 0.95rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .price-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .price-row .label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .price-row .value {
+            font-weight: 600;
+        }
+
+        .price-row.total {
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .price-row.total .label {
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .price-row.total .value {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
         /* Booking Form Card */
         .booking-form-card {
             background: white;
@@ -529,6 +588,29 @@
                     <div class="price-label">Price per hour</div>
                     <div class="price-value">₹<span id="guide-price">799</span> <span>/ hour</span></div>
                 </div>
+                <div class="price-summary">
+                    <h4><i class="fas fa-calculator"></i> Price Breakdown</h4>
+                    <div class="price-row">
+                        <span class="label">Hourly Rate</span>
+                        <span class="value">₹<span id="summary-rate">799</span></span>
+                    </div>
+                    <div class="price-row">
+                        <span class="label">Duration</span>
+                        <span class="value"><span id="summary-hours">2</span> hours</span>
+                    </div>
+                    <div class="price-row">
+                        <span class="label">Subtotal</span>
+                        <span class="value">₹<span id="summary-subtotal">1,598</span></span>
+                    </div>
+                    <div class="price-row">
+                        <span class="label">Service Fee (5%)</span>
+                        <span class="value">₹<span id="summary-fee">80</span></span>
+                    </div>
+                    <div class="price-row total">
+                        <span class="label">Total Amount</span>
+                        <span class="value">₹<span id="summary-total">1,678</span></span>
+                    </div>
+                </div>
             </div>
 
             <!-- Booking Form Card -->
@@ -581,7 +663,7 @@
                                 <i class="fas fa-times"></i> Cancel
                             </a>
                             <button type="submit" class="btn-proceed">
-                                <i class="fas fa-lock"></i> Proceed to Payment
+                                <i class="fas fa-lock"></i> Pay ₹<span id="btn-total">1,678</span>
                             </button>
                         </div>
                     </form>
@@ -744,6 +826,31 @@
 
         document.getElementById('guide-stars').innerHTML = generateStars(guide.rating);
 
+        // Price calculation function
+        function calculatePrice() {
+            const hours = parseInt(document.getElementById('booking-hours').value);
+            const hourlyRate = guide.price;
+            const subtotal = hourlyRate * hours;
+            const serviceFee = Math.round(subtotal * 0.05); // 5% service fee
+            const total = subtotal + serviceFee;
+            
+            // Update price summary
+            document.getElementById('summary-rate').textContent = hourlyRate.toLocaleString();
+            document.getElementById('summary-hours').textContent = hours;
+            document.getElementById('summary-subtotal').textContent = subtotal.toLocaleString();
+            document.getElementById('summary-fee').textContent = serviceFee.toLocaleString();
+            document.getElementById('summary-total').textContent = total.toLocaleString();
+            document.getElementById('btn-total').textContent = total.toLocaleString();
+            
+            return total;
+        }
+
+        // Calculate price on page load
+        calculatePrice();
+
+        // Recalculate when hours change
+        document.getElementById('booking-hours').addEventListener('change', calculatePrice);
+
         // Form submission
         document.getElementById('booking-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -755,7 +862,7 @@
             const hours = document.getElementById('booking-hours').value;
             const notes = document.getElementById('booking-notes').value;
             
-            const totalPrice = guide.price * parseInt(hours);
+            const totalPrice = calculatePrice();
             
             // Store booking data for payment page
             const bookingData = {
@@ -768,6 +875,8 @@
                 date: date || 'To be confirmed',
                 time: 'To be confirmed',
                 price: totalPrice,
+                hourlyRate: guide.price,
+                hours: hours,
                 notes: notes
             };
             
