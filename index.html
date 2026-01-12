@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Mouse Follow Cursor -->
+    <div class="cursor-follower" id="cursor-follower"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+
     <!-- Navigation -->
     <nav>
         <div class="logo">Trip<span>Guide</span></div>
@@ -626,5 +630,79 @@
     </div>
 
     <script src="script.js"></script>
+    
+    <!-- Mouse Follow Script -->
+    <script>
+        (function() {
+            const follower = document.getElementById('cursor-follower');
+            const dot = document.getElementById('cursor-dot');
+            
+            // Spring physics configuration
+            const spring = {
+                mass: 0.1,
+                damping: 10,
+                stiffness: 131
+            };
+            
+            let mouseX = 0, mouseY = 0;
+            let followerX = 0, followerY = 0;
+            let velocityX = 0, velocityY = 0;
+            
+            // Update mouse position
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Move dot instantly
+                dot.style.left = mouseX + 'px';
+                dot.style.top = mouseY + 'px';
+                
+                // Show cursors
+                follower.classList.add('visible');
+                dot.classList.add('visible');
+            });
+            
+            // Hide cursor when leaving window
+            document.addEventListener('mouseleave', () => {
+                follower.classList.remove('visible');
+                dot.classList.remove('visible');
+            });
+            
+            // Hover effect on interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, input, .destination-card, .service-card, .testimonial-card, .guide-card');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => follower.classList.add('hover'));
+                el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
+            });
+            
+            // Click effect
+            document.addEventListener('mousedown', () => follower.classList.add('clicking'));
+            document.addEventListener('mouseup', () => follower.classList.remove('clicking'));
+            
+            // Spring animation loop
+            function animate() {
+                // Calculate spring force
+                const dx = mouseX - followerX;
+                const dy = mouseY - followerY;
+                
+                const forceX = dx * spring.stiffness;
+                const forceY = dy * spring.stiffness;
+                
+                // Apply damping and mass
+                velocityX += (forceX - velocityX * spring.damping) * spring.mass;
+                velocityY += (forceY - velocityY * spring.damping) * spring.mass;
+                
+                followerX += velocityX * 0.1;
+                followerY += velocityY * 0.1;
+                
+                follower.style.left = followerX + 'px';
+                follower.style.top = followerY + 'px';
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        })();
+    </script>
 </body>
 </html>

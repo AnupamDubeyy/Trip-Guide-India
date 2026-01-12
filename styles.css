@@ -4,6 +4,45 @@
     box-sizing: border-box;
 }
 
+/* Mouse Follow Cursor */
+.cursor-follower {
+    width: 25px;
+    height: 25px;
+    background-color: #FF7A00;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+    opacity: 0;
+}
+
+.cursor-dot {
+    display: none;
+}
+
+.cursor-follower.visible {
+    opacity: 1;
+}
+
+.cursor-follower.hover {
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.cursor-follower.clicking {
+    transform: translate(-50%, -50%) scale(0.85);
+}
+
+@media (max-width: 768px) {
+    .cursor-follower,
+    .cursor-dot {
+        display: none;
+    }
+}
+
 :root {
     --primary-color: #0A1A3A;
     --secondary-color: #FFFFFF;
