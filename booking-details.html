@@ -8,12 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         .booking-page {
             min-height: 100vh;
             background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 50%, #0A1A3A 100%);
-            padding-top: 80px;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .booking-page::before {
@@ -28,57 +33,71 @@
             pointer-events: none;
         }
 
-        /* Floating decorative elements */
-        .booking-page::after {
-            content: '';
-            position: absolute;
-            top: 20%;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255, 122, 0, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .booking-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px 60px;
-            display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            gap: 40px;
-            align-items: start;
+        /* Full Screen Integrated Container */
+        .booking-fullscreen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             position: relative;
             z-index: 1;
         }
 
-        /* Guide Info Card - Enhanced */
-        .guide-info-card {
+        /* Back Button Header */
+        .booking-top-bar {
+            padding: 100px 5% 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 24px 12px 16px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .back-btn i {
+            font-size: 1rem;
+        }
+
+        /* Integrated Main Content */
+        .integrated-booking-card {
+            flex: 1;
             background: white;
-            border-radius: 28px;
+            margin: 0 5% 40px;
+            border-radius: 32px;
             overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
-            position: sticky;
-            top: 100px;
-            transform: translateY(0);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
         }
 
-        .guide-info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15);
-        }
-
-        .guide-header {
+        /* Guide Hero Section */
+        .guide-hero {
             background: linear-gradient(135deg, var(--accent-color) 0%, #d45500 100%);
-            padding: 40px 30px 50px;
-            text-align: center;
+            padding: 50px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
             position: relative;
             overflow: hidden;
         }
 
-        .guide-header::before {
+        .guide-hero::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -94,42 +113,39 @@
             100% { transform: rotate(360deg); }
         }
 
-        .guide-header::after {
-            content: '';
-            position: absolute;
-            bottom: -25px;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background: white;
-            border-radius: 28px 28px 0 0;
+        .guide-hero-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+            flex: 1;
         }
 
         .guide-avatar {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             border: 5px solid white;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             object-fit: cover;
-            margin-bottom: 18px;
-            position: relative;
-            z-index: 2;
+            flex-shrink: 0;
             transition: transform 0.3s ease;
         }
 
-        .guide-info-card:hover .guide-avatar {
+        .guide-avatar:hover {
             transform: scale(1.05);
         }
 
-        .guide-header h2 {
+        .guide-hero-info {
             color: white;
+        }
+
+        .guide-hero-info h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.9rem;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            margin-bottom: 8px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 2;
         }
 
         .guide-badge {
@@ -139,31 +155,109 @@
             color: white;
             padding: 8px 20px;
             border-radius: 25px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .guide-hero-info .specialty {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .guide-hero-info .specialty i {
+            font-size: 1rem;
+        }
+
+        /* Guide Hero Right - Price Display */
+        .guide-hero-right {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px 35px;
+            border-radius: 20px;
+            text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.3);
             position: relative;
             z-index: 2;
         }
 
-        .guide-details {
-            padding: 40px 30px 25px;
+        .guide-hero-right .price-label {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .guide-hero-right .price-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .guide-hero-right .price-value span {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.85;
+        }
+
+        /* Main Content Area */
+        .booking-main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 0;
+        }
+
+        /* Guide Details Panel */
+        .guide-details-panel {
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 45px;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .panel-section {
+            margin-bottom: 35px;
+        }
+
+        .panel-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .panel-section-title {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-section-title i {
+            color: var(--accent-color);
+            font-size: 1rem;
         }
 
         .guide-detail-item {
             display: flex;
             align-items: flex-start;
             gap: 18px;
-            padding: 18px 15px;
+            padding: 18px;
             border-radius: 16px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             transition: all 0.3s ease;
-            cursor: default;
         }
 
         .guide-detail-item:hover {
-            background: linear-gradient(135deg, rgba(255, 122, 0, 0.05), rgba(255, 122, 0, 0.02));
             transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         .guide-detail-item:last-child {
@@ -191,12 +285,12 @@
         }
 
         .guide-detail-item .detail-content h4 {
-            font-size: 0.8rem;
-            color: #999;
+            font-size: 0.75rem;
+            color: #94a3b8;
             font-weight: 600;
             margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
         }
 
         .guide-detail-item .detail-content p {
@@ -205,53 +299,11 @@
             font-size: 1.05rem;
         }
 
-        .guide-price-display {
-            background: linear-gradient(135deg, #f8f9fa, #eef1f5);
-            margin: 15px 25px 25px;
-            padding: 25px;
-            border-radius: 18px;
-            text-align: center;
-            border: 2px dashed #e0e5eb;
-            position: relative;
-        }
-
-        .guide-price-display::before {
-            content: '💰';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 1.2rem;
-        }
-
-        .guide-price-display .price-label {
-            font-size: 0.85rem;
-            color: #888;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .guide-price-display .price-value {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--accent-color);
-        }
-
-        .guide-price-display .price-value span {
-            font-size: 1rem;
-            font-weight: 400;
-            color: #888;
-        }
-
-        /* Price Summary Box - Enhanced */
+        /* Price Summary Box */
         .price-summary {
             background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
-            margin: 0 25px 25px;
             padding: 28px;
-            border-radius: 18px;
+            border-radius: 20px;
             color: white;
             position: relative;
             overflow: hidden;
@@ -330,114 +382,47 @@
             text-shadow: 0 2px 10px rgba(255, 122, 0, 0.3);
         }
 
-        /* Booking Form Card - Enhanced */
-        .booking-form-card {
+        /* Booking Form Panel */
+        .booking-form-panel {
+            padding: 45px 50px;
             background: white;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
-            position: relative;
         }
 
-        .form-header {
-            background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
-            padding: 40px 45px;
-            position: relative;
-            overflow: hidden;
+        .form-panel-header {
+            margin-bottom: 35px;
         }
 
-        .form-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #FF7A00, #FF9A33, #FFB366, #FF9A33, #FF7A00);
-            background-size: 200% 100%;
-            animation: gradientMove 3s ease infinite;
-        }
-
-        @keyframes gradientMove {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .form-header::after {
-            content: '';
-            position: absolute;
-            bottom: -25px;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background: white;
-            border-radius: 28px 28px 0 0;
-        }
-
-        .form-header .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            padding: 8px 14px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .form-header .back-link:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(-5px);
-        }
-
-        .form-header .back-link i {
-            font-size: 0.85rem;
-        }
-
-        .form-header h2 {
-            color: white;
+        .form-panel-header h2 {
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
+            color: var(--dark-text);
             display: flex;
             align-items: center;
-            gap: 18px;
-            position: relative;
-            z-index: 1;
+            gap: 15px;
+            margin-bottom: 10px;
         }
 
-        .form-header h2 i {
+        .form-panel-header h2 i {
             background: linear-gradient(135deg, var(--accent-color), #d45500);
-            width: 55px;
-            height: 55px;
-            border-radius: 16px;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
-            box-shadow: 0 10px 25px rgba(255, 122, 0, 0.4);
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 8px 20px rgba(255, 122, 0, 0.3);
         }
 
-        .form-header p {
-            color: rgba(255, 255, 255, 0.75);
-            margin-top: 12px;
-            padding-left: 73px;
+        .form-panel-header p {
+            color: #64748b;
             font-size: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .form-body {
-            padding: 50px 45px 45px;
+            padding-left: 65px;
         }
 
         .form-group {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             position: relative;
         }
 
@@ -445,7 +430,7 @@
             display: block;
             font-weight: 600;
             color: var(--dark-text);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -462,7 +447,7 @@
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 18px 22px;
+            padding: 16px 20px;
             border: 2px solid #e3e8ef;
             border-radius: 14px;
             font-family: inherit;
@@ -494,7 +479,7 @@
 
         .form-group textarea {
             resize: vertical;
-            min-height: 110px;
+            min-height: 90px;
         }
 
         .form-group select {
@@ -509,20 +494,20 @@
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            gap: 20px;
         }
 
         .form-buttons {
             display: flex;
             gap: 18px;
-            margin-top: 40px;
-            padding-top: 35px;
+            margin-top: 35px;
+            padding-top: 30px;
             border-top: 2px solid #f0f3f7;
         }
 
         .btn-cancel {
             flex: 1;
-            padding: 20px;
+            padding: 18px;
             border: 2px solid #e0e5eb;
             background: white;
             border-radius: 14px;
@@ -548,12 +533,12 @@
 
         .btn-proceed {
             flex: 1.6;
-            padding: 20px 30px;
+            padding: 18px 30px;
             background: linear-gradient(135deg, var(--accent-color) 0%, #d45500 100%);
             color: white;
             border: none;
             border-radius: 14px;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -591,15 +576,21 @@
             transform: translateY(-2px);
         }
 
-        /* Security badges - Enhanced */
+        /* Security badges */
         .security-info {
             display: flex;
             justify-content: center;
-            gap: 35px;
-            margin-top: 30px;
-            padding: 25px;
+            gap: 30px;
+            margin-top: 25px;
+            padding: 20px;
+        .security-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            padding: 20px;
             background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            border-radius: 16px;
+            border-radius: 14px;
             flex-wrap: wrap;
         }
 
@@ -623,88 +614,79 @@
             font-size: 1.1rem;
         }
 
-        /* Back button - Enhanced */
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 30px;
-            padding: 10px 20px 10px 10px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .back-link:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .back-link i {
-            width: 38px;
-            height: 38px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .back-link:hover i {
-            background: var(--accent-color);
-            transform: translateX(-3px);
-        }
-
-        /* Responsive - Enhanced */
-        @media (max-width: 1024px) {
-            .booking-container {
-                grid-template-columns: 1fr;
-                padding: 30px 20px 50px;
-                gap: 30px;
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .guide-hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 30px;
             }
 
-            .guide-info-card {
-                position: static;
-                max-width: 500px;
-                margin: 0 auto;
+            .guide-hero-left {
+                flex-direction: column;
+            }
+
+            .guide-hero-info .specialty {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .booking-main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .guide-details-panel {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+                padding: 35px;
+            }
+
+            .booking-form-panel {
+                padding: 35px;
             }
         }
 
         @media (max-width: 768px) {
-            .booking-container {
-                padding: 25px 15px 40px;
+            .booking-top-bar {
+                padding: 90px 4% 15px;
+            }
+
+            .integrated-booking-card {
+                margin: 0 3% 30px;
+                border-radius: 24px;
+            }
+
+            .guide-hero {
+                padding: 30px 20px;
+                gap: 25px;
+            }
+
+            .guide-avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .guide-hero-info h1 {
+                font-size: 1.8rem;
+            }
+
+            .guide-hero-right {
+                padding: 18px 25px;
+            }
+
+            .guide-hero-right .price-value {
+                font-size: 2rem;
+            }
+
+            .guide-details-panel,
+            .booking-form-panel {
+                padding: 25px 20px;
             }
 
             .form-row {
                 grid-template-columns: 1fr;
                 gap: 0;
-            }
-
-            .form-body {
-                padding: 35px 25px 30px;
-            }
-
-            .form-header {
-                padding: 30px 25px;
-            }
-
-            .form-header h2 {
-                font-size: 1.6rem;
-            }
-
-            .form-header h2 i {
-                width: 45px;
-                height: 45px;
-                font-size: 1.1rem;
-            }
-
-            .form-header p {
-                padding-left: 60px;
-                font-size: 0.9rem;
             }
 
             .form-buttons {
@@ -716,33 +698,52 @@
             }
 
             .security-info {
-                gap: 20px;
-                padding: 20px 15px;
+                gap: 15px;
+                padding: 15px;
             }
 
             .security-info .badge {
                 font-size: 0.8rem;
             }
 
-            .guide-header {
-                padding: 30px 20px 45px;
+            .form-panel-header h2 {
+                font-size: 1.5rem;
             }
 
-            .guide-details {
-                padding: 30px 20px 20px;
+            .form-panel-header h2 i {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+
+            .form-panel-header p {
+                padding-left: 55px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .guide-hero-left {
+                gap: 20px;
+            }
+
+            .guide-hero-info h1 {
+                font-size: 1.5rem;
             }
 
             .guide-detail-item {
-                padding: 15px 10px;
+                padding: 14px;
+                gap: 14px;
+            }
+
+            .guide-detail-item i {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
 
             .price-summary {
-                margin: 0 15px 20px;
-                padding: 22px;
-            }
-
-            .guide-price-display {
-                margin: 10px 15px 20px;
+                padding: 22px 18px;
             }
         }
     </style>
@@ -769,132 +770,156 @@
     </nav>
 
     <div class="booking-page">
-        <div class="booking-container">
-            <!-- Guide Info Card -->
-            <div class="guide-info-card">
-                <div class="guide-header">
-                    <img src="" alt="Guide" class="guide-avatar" id="guide-avatar">
-                    <h2 id="guide-name">Guide Name</h2>
-                    <span class="guide-badge" id="guide-badge">Top Rated</span>
-                </div>
-                <div class="guide-details">
-                    <div class="guide-detail-item">
-                        <i class="fas fa-briefcase"></i>
-                        <div class="detail-content">
-                            <h4>Specialty</h4>
-                            <p id="guide-specialty">--</p>
-                        </div>
-                    </div>
-                    <div class="guide-detail-item">
-                        <i class="fas fa-language"></i>
-                        <div class="detail-content">
-                            <h4>Languages</h4>
-                            <p id="guide-languages">--</p>
-                        </div>
-                    </div>
-                    <div class="guide-detail-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div class="detail-content">
-                            <h4>Locations</h4>
-                            <p id="guide-locations">--</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="guide-price-display">
-                    <div class="price-label">Price per hour</div>
-                    <div class="price-value">₹<span id="guide-price">799</span> <span>/ hour</span></div>
-                </div>
-                <div class="price-summary">
-                    <h4><i class="fas fa-calculator"></i> Price Breakdown</h4>
-                    <div class="price-row">
-                        <span class="label">Hourly Rate</span>
-                        <span class="value">₹<span id="summary-rate">799</span></span>
-                    </div>
-                    <div class="price-row">
-                        <span class="label">Duration</span>
-                        <span class="value"><span id="summary-hours">2</span> hours</span>
-                    </div>
-                    <div class="price-row">
-                        <span class="label">Subtotal</span>
-                        <span class="value">₹<span id="summary-subtotal">1,598</span></span>
-                    </div>
-                    <div class="price-row">
-                        <span class="label">Service Fee (5%)</span>
-                        <span class="value">₹<span id="summary-fee">80</span></span>
-                    </div>
-                    <div class="price-row total">
-                        <span class="label">Total Amount</span>
-                        <span class="value">₹<span id="summary-total">1,678</span></span>
-                    </div>
-                </div>
+        <div class="booking-fullscreen">
+            <!-- Top Bar with Back Button -->
+            <div class="booking-top-bar">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Guides</span>
+                </a>
             </div>
 
-            <!-- Booking Form Card -->
-            <div class="booking-form-card">
-                <div class="form-header">
-                    <a href="javascript:history.back()" class="back-link">
-                        <i class="fas fa-arrow-left"></i>
-                        <span>Back to Guides</span>
-                    </a>
-                    <h2><i class="fas fa-calendar-check"></i> Book Your Tour</h2>
-                    <p>Fill in your details to proceed with the booking</p>
+            <!-- Integrated Booking Card -->
+            <div class="integrated-booking-card">
+                <!-- Guide Hero Section -->
+                <div class="guide-hero">
+                    <div class="guide-hero-left">
+                        <img src="" alt="Guide" class="guide-avatar" id="guide-avatar">
+                        <div class="guide-hero-info">
+                            <span class="guide-badge" id="guide-badge">Top Rated</span>
+                            <h1 id="guide-name">Guide Name</h1>
+                            <div class="specialty">
+                                <i class="fas fa-briefcase"></i>
+                                <span id="guide-specialty">--</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="guide-hero-right">
+                        <div class="price-label">Price per hour</div>
+                        <div class="price-value">₹<span id="guide-price">799</span> <span>/ hour</span></div>
+                    </div>
                 </div>
-                <div class="form-body">
-                    <form id="booking-form">
-                        <div class="form-group">
-                            <label for="booking-name"><i class="fas fa-user"></i> Your Name</label>
-                            <input type="text" id="booking-name" placeholder="Enter your full name" required>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="booking-email"><i class="fas fa-envelope"></i> Email</label>
-                                <input type="email" id="booking-email" placeholder="your@email.com" required>
+
+                <!-- Main Content Area -->
+                <div class="booking-main-content">
+                    <!-- Guide Details Panel (Left Side) -->
+                    <div class="guide-details-panel">
+                        <div class="panel-section">
+                            <div class="panel-section-title">
+                                <i class="fas fa-info-circle"></i>
+                                Guide Information
                             </div>
-                            <div class="form-group">
-                                <label for="booking-phone"><i class="fas fa-phone"></i> Phone</label>
-                                <input type="tel" id="booking-phone" placeholder="+91 98765 43210" required>
+                            <div class="guide-detail-item">
+                                <i class="fas fa-language"></i>
+                                <div class="detail-content">
+                                    <h4>Languages</h4>
+                                    <p id="guide-languages">--</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="booking-date"><i class="fas fa-calendar"></i> Tour Date</label>
-                                <input type="date" id="booking-date" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="booking-hours"><i class="fas fa-clock"></i> Duration</label>
-                                <select id="booking-hours" required>
-                                    <option value="2">2 Hours</option>
-                                    <option value="4">4 Hours</option>
-                                    <option value="6">6 Hours</option>
-                                    <option value="8">Full Day (8 Hours)</option>
-                                </select>
+                            <div class="guide-detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="detail-content">
+                                    <h4>Tour Location</h4>
+                                    <p id="guide-locations">--</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="booking-notes"><i class="fas fa-comment-alt"></i> Special Requests</label>
-                            <textarea id="booking-notes" placeholder="Any special requirements or preferences..."></textarea>
+
+                        <div class="panel-section">
+                            <div class="panel-section-title">
+                                <i class="fas fa-calculator"></i>
+                                Price Breakdown
+                            </div>
+                            <div class="price-summary">
+                                <h4><i class="fas fa-receipt"></i> Your Booking Summary</h4>
+                                <div class="price-row">
+                                    <span class="label">Hourly Rate</span>
+                                    <span class="value">₹<span id="summary-rate">799</span></span>
+                                </div>
+                                <div class="price-row">
+                                    <span class="label">Duration</span>
+                                    <span class="value"><span id="summary-hours">2</span> hours</span>
+                                </div>
+                                <div class="price-row">
+                                    <span class="label">Subtotal</span>
+                                    <span class="value">₹<span id="summary-subtotal">1,598</span></span>
+                                </div>
+                                <div class="price-row">
+                                    <span class="label">Service Fee (5%)</span>
+                                    <span class="value">₹<span id="summary-fee">80</span></span>
+                                </div>
+                                <div class="price-row total">
+                                    <span class="label">Total Amount</span>
+                                    <span class="value">₹<span id="summary-total">1,678</span></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-buttons">
-                            <a href="javascript:history.back()" class="btn-cancel">
-                                <i class="fas fa-times"></i> Cancel
-                            </a>
-                            <button type="submit" class="btn-proceed">
-                                <i class="fas fa-lock"></i> Pay ₹<span id="btn-total">1,678</span>
-                            </button>
+                    </div>
+
+                    <!-- Booking Form Panel (Right Side) -->
+                    <div class="booking-form-panel">
+                        <div class="form-panel-header">
+                            <h2><i class="fas fa-calendar-check"></i> Book Your Tour</h2>
+                            <p>Fill in your details to proceed with the booking</p>
                         </div>
-                    </form>
-                    <div class="security-info">
-                        <div class="badge">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Secure Booking</span>
-                        </div>
-                        <div class="badge">
-                            <i class="fas fa-undo"></i>
-                            <span>Free Cancellation</span>
-                        </div>
-                        <div class="badge">
-                            <i class="fas fa-headset"></i>
-                            <span>24/7 Support</span>
+                        
+                        <form id="booking-form">
+                            <div class="form-group">
+                                <label for="booking-name"><i class="fas fa-user"></i> Your Name</label>
+                                <input type="text" id="booking-name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="booking-email"><i class="fas fa-envelope"></i> Email</label>
+                                    <input type="email" id="booking-email" placeholder="your@email.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="booking-phone"><i class="fas fa-phone"></i> Phone</label>
+                                    <input type="tel" id="booking-phone" placeholder="+91 98765 43210" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="booking-date"><i class="fas fa-calendar"></i> Tour Date</label>
+                                    <input type="date" id="booking-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="booking-hours"><i class="fas fa-clock"></i> Duration</label>
+                                    <select id="booking-hours" required>
+                                        <option value="2">2 Hours</option>
+                                        <option value="4">4 Hours</option>
+                                        <option value="6">6 Hours</option>
+                                        <option value="8">Full Day (8 Hours)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking-notes"><i class="fas fa-comment-alt"></i> Special Requests</label>
+                                <textarea id="booking-notes" placeholder="Any special requirements or preferences..."></textarea>
+                            </div>
+                            <div class="form-buttons">
+                                <a href="javascript:history.back()" class="btn-cancel">
+                                    <i class="fas fa-times"></i> Cancel
+                                </a>
+                                <button type="submit" class="btn-proceed">
+                                    <i class="fas fa-lock"></i> Pay ₹<span id="btn-total">1,678</span>
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="security-info">
+                            <div class="badge">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Secure Booking</span>
+                            </div>
+                            <div class="badge">
+                                <i class="fas fa-undo"></i>
+                                <span>Free Cancellation</span>
+                            </div>
+                            <div class="badge">
+                                <i class="fas fa-headset"></i>
+                                <span>24/7 Support</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1019,7 +1044,9 @@
         document.getElementById('guide-badge').textContent = guide.badge;
         document.getElementById('guide-specialty').textContent = guide.specialty;
         document.getElementById('guide-languages').textContent = guide.languages;
-        document.getElementById('guide-locations').textContent = guide.location;
+        // Show the searched location if available, otherwise show first location from guide's list
+        const displayLocation = searchPlace ? searchPlace.charAt(0).toUpperCase() + searchPlace.slice(1).toLowerCase() : guide.location.split(',')[0].trim();
+        document.getElementById('guide-locations').textContent = displayLocation;
         document.getElementById('guide-price').textContent = guide.price;
 
         // Set date if provided
