@@ -8,134 +8,406 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .payment-summary-page {
-            padding-top: 100px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .payment-page {
+            padding-top: 80px;
             min-height: 100vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            background: linear-gradient(135deg, #f8f9fc 0%, #eef1f5 100%);
+        }
+
+        /* Hero Banner */
+        .payment-hero {
+            background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
+            padding: 35px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 122, 0, 0.15), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .payment-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent-color);
+        }
+
+        .breadcrumb span {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .breadcrumb .current {
+            color: white;
+            font-weight: 500;
+        }
+
+        .hero-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hero-title .icon-box {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--accent-color), #d45500);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(255, 122, 0, 0.4);
         }
 
-        .summary-container {
-            max-width: 550px;
-            width: 100%;
-            margin: 40px 20px;
+        .hero-title h1 {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .hero-title p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            margin-top: 3px;
+        }
+
+        /* Main Content */
+        .payment-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 40px 80px;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 40px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Left Column - Booking Details */
+        .booking-details-section {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 30px 35px;
+            border-bottom: 1px solid #eef1f5;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header i {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #fff5eb, #ffefe0);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--dark-text);
+        }
+
+        .details-grid {
+            padding: 30px 35px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .detail-card {
+            background: linear-gradient(135deg, #f8f9fc 0%, #f3f5f9 100%);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .detail-card:hover {
+            background: white;
+            border-color: rgba(255, 122, 0, 0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            transform: translateY(-3px);
+        }
+
+        .detail-card .card-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .detail-card:hover .card-icon {
+            background: linear-gradient(135deg, var(--accent-color), #e06800);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .detail-card .card-label {
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .detail-card .card-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            word-break: break-word;
+        }
+
+        .detail-card.full-width {
+            grid-column: span 2;
+        }
+
+        /* Guide Info Card */
+        .guide-highlight {
+            margin: 0 35px 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guide-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 100%;
+            background: radial-gradient(circle at right, rgba(255, 122, 0, 0.2), transparent);
+        }
+
+        .guide-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent-color), #e06800);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .guide-info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .guide-info .guide-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .guide-info .guide-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Right Column - Payment Summary */
+        .payment-summary-section {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
         }
 
         .summary-card {
             background: white;
             border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
 
         .summary-header {
             background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
-            padding: 35px 40px;
+            padding: 30px;
             text-align: center;
             position: relative;
         }
 
-        .summary-header::after {
+        .summary-header::before {
             content: '';
             position: absolute;
-            bottom: -20px;
+            top: 0;
             left: 0;
             right: 0;
-            height: 40px;
-            background: white;
-            border-radius: 24px 24px 0 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FF7A00, #FF9A33, #FFB366, #FF9A33, #FF7A00);
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
         }
 
-        .summary-header h1 {
-            font-family: 'Playfair Display', serif;
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .summary-header h3 {
             color: white;
-            font-size: 1.8rem;
-            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
 
-        .summary-header p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.95rem;
+        .summary-header h3 i {
+            color: var(--accent-color);
         }
 
         .summary-body {
-            padding: 30px 40px 40px;
+            padding: 30px;
         }
 
-        .booking-detail {
+        .price-breakdown {
+            margin-bottom: 25px;
+        }
+
+        .price-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+            border-bottom: 1px dashed #eee;
         }
 
-        .booking-detail:last-of-type {
+        .price-row:last-child {
             border-bottom: none;
         }
 
-        .booking-detail .label {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .price-row .label {
             color: #666;
             font-size: 0.95rem;
         }
 
-        .booking-detail .label i {
-            width: 35px;
-            height: 35px;
-            background: #f0f2f5;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-color);
-        }
-
-        .booking-detail .value {
+        .price-row .value {
             font-weight: 600;
             color: var(--dark-text);
-            text-align: right;
         }
 
-        .total-section {
-            margin-top: 25px;
-            padding: 25px;
+        .price-row.discount .value {
+            color: #28a745;
+        }
+
+        .total-box {
             background: linear-gradient(135deg, #fff5eb 0%, #ffefe0 100%);
             border-radius: 16px;
-            border: 2px dashed var(--accent-color);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid rgba(255, 122, 0, 0.2);
         }
 
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .total-box .total-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
         }
 
-        .total-row .label {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark-text);
-        }
-
-        .total-row .amount {
-            font-size: 2rem;
+        .total-box .total-amount {
+            font-size: 2.5rem;
             font-weight: 700;
             color: var(--accent-color);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .total-box .tax-note {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
         }
 
         .pay-button {
             width: 100%;
-            margin-top: 30px;
-            padding: 18px;
+            padding: 20px;
             background: linear-gradient(135deg, var(--accent-color) 0%, #e06800 100%);
             color: white;
             border: none;
-            border-radius: 14px;
-            font-size: 1.15rem;
+            border-radius: 16px;
+            font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -143,72 +415,187 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: 0 6px 20px rgba(255, 122, 0, 0.35);
+            box-shadow: 0 10px 30px rgba(255, 122, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pay-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .pay-button:hover::before {
+            left: 100%;
         }
 
         .pay-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 122, 0, 0.45);
+            box-shadow: 0 15px 40px rgba(255, 122, 0, 0.5);
         }
 
-        .pay-button i {
+        /* Security Section */
+        .security-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .security-section .lock-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #28a745;
             font-size: 1.3rem;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
         }
 
-        .secure-badge {
+        .security-section p {
+            color: #2e7d32;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .security-section small {
+            display: block;
+            color: #66bb6a;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px dashed #e0e0e0;
+        }
+
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .trust-badge i {
+            width: 40px;
+            height: 40px;
+            background: #f5f7fa;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin-top: 25px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 12px;
+            color: var(--accent-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        .secure-badge i {
-            color: #28a745;
-            font-size: 1.2rem;
+        .trust-badge:hover i {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.1);
         }
 
-        .secure-badge span {
-            color: #666;
-            font-size: 0.9rem;
+        .trust-badge span {
+            font-size: 0.75rem;
+            color: #888;
+            text-align: center;
+        }
+
+        /* Back Link */
+        .back-link-container {
+            text-align: center;
+            margin-top: 20px;
         }
 
         .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             color: #666;
             text-decoration: none;
             font-size: 0.9rem;
-            transition: color 0.3s;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
         }
 
         .back-link:hover {
             color: var(--accent-color);
+            background: #fff5eb;
         }
 
-        .back-link i {
-            margin-right: 5px;
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .payment-content {
+                grid-template-columns: 1fr;
+                padding: 30px 25px 60px;
+            }
+
+            .payment-summary-section {
+                position: static;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-card.full-width {
+                grid-column: span 1;
+            }
         }
 
-        @media (max-width: 480px) {
-            .summary-header {
-                padding: 30px 25px;
+        @media (max-width: 768px) {
+            .payment-hero {
+                padding: 40px 0;
+            }
+
+            .hero-content {
+                padding: 0 20px;
+            }
+
+            .hero-title .icon-box {
+                width: 55px;
+                height: 55px;
+                font-size: 1.4rem;
+            }
+
+            .hero-title h1 {
+                font-size: 1.8rem;
+            }
+
+            .details-grid {
+                padding: 25px 20px;
+            }
+
+            .guide-highlight {
+                margin: 0 20px 25px;
+                flex-direction: column;
+                text-align: center;
             }
 
             .summary-body {
-                padding: 25px;
+                padding: 25px 20px;
             }
 
-            .summary-header h1 {
-                font-size: 1.5rem;
-            }
-
-            .total-row .amount {
-                font-size: 1.6rem;
+            .total-box .total-amount {
+                font-size: 2rem;
             }
         }
     </style>
@@ -228,62 +615,163 @@
         </div>
     </nav>
 
-    <section class="payment-summary-page">
-        <div class="summary-container">
-            <div class="summary-card">
-                <div class="summary-header">
-                    <h1><i class="fas fa-receipt"></i> Booking Summary</h1>
-                    <p>Review your booking details before payment</p>
+    <section class="payment-page">
+        <!-- Hero Banner -->
+        <div class="payment-hero">
+            <div class="hero-content">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>/</span>
+                    <a href="search-guides.html">Guides</a>
+                    <span>/</span>
+                    <span class="current">Booking Summary</span>
                 </div>
-                <div class="summary-body">
-                    <div class="booking-detail">
-                        <span class="label"><i class="fas fa-user-tie"></i> Guide</span>
-                        <span class="value" id="summary-guide">--</span>
+                <div class="hero-title">
+                    <div class="icon-box">
+                        <i class="fas fa-receipt"></i>
                     </div>
-                    <div class="booking-detail">
-                        <span class="label"><i class="fas fa-user"></i> Customer</span>
-                        <span class="value" id="summary-customer">--</span>
+                    <div>
+                        <h1>Booking Summary</h1>
+                        <p>Review your booking details before proceeding to payment</p>
                     </div>
-                    <div class="booking-detail">
-                        <span class="label"><i class="fas fa-envelope"></i> Email</span>
-                        <span class="value" id="summary-email">--</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="payment-content">
+            <!-- Left Column - Booking Details -->
+            <div class="booking-details-section">
+                <div class="section-header">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h2>Booking Details</h2>
+                </div>
+
+                <!-- Guide Highlight -->
+                <div class="guide-highlight">
+                    <div class="guide-avatar">
+                        <i class="fas fa-user-tie"></i>
                     </div>
-                    <div class="booking-detail">
-                        <span class="label"><i class="fas fa-phone"></i> Phone</span>
-                        <span class="value" id="summary-phone">--</span>
+                    <div class="guide-info">
+                        <div class="guide-label">Your Tour Guide</div>
+                        <div class="guide-name" id="summary-guide">--</div>
                     </div>
-                    <div class="booking-detail">
-                        <span class="label"><i class="fas fa-map-marker-alt"></i> Destination</span>
-                        <span class="value" id="summary-destination">--</span>
-                    </div>
-                    <div class="booking-detail">
-                        <span class="label"><i class="fas fa-calendar-alt"></i> Date</span>
-                        <span class="value" id="summary-date">--</span>
-                    </div>
-                    <div class="booking-detail">
-                        <span class="label"><i class="fas fa-clock"></i> Duration</span>
-                        <span class="value" id="summary-duration">--</span>
+                </div>
+
+                <!-- Details Grid -->
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <div class="card-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="card-label">Customer Name</div>
+                        <div class="card-value" id="summary-customer">--</div>
                     </div>
 
-                    <div class="total-section">
-                        <div class="total-row">
-                            <span class="label">Total Amount</span>
-                            <span class="amount" id="summary-total">₹0</span>
+                    <div class="detail-card">
+                        <div class="card-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="card-label">Phone Number</div>
+                        <div class="card-value" id="summary-phone">--</div>
+                    </div>
+
+                    <div class="detail-card full-width">
+                        <div class="card-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="card-label">Email Address</div>
+                        <div class="card-value" id="summary-email">--</div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="card-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="card-label">Destination</div>
+                        <div class="card-value" id="summary-destination">--</div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="card-label">Tour Date</div>
+                        <div class="card-value" id="summary-date">--</div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-label">Group Size</div>
+                        <div class="card-value" id="summary-duration">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Payment Summary -->
+            <div class="payment-summary-section">
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <h3><i class="fas fa-wallet"></i> Payment Summary</h3>
+                    </div>
+                    <div class="summary-body">
+                        <div class="price-breakdown">
+                            <div class="price-row">
+                                <span class="label">Guide Service Fee</span>
+                                <span class="value" id="service-fee">₹0</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="label">Platform Fee</span>
+                                <span class="value">₹99</span>
+                            </div>
+                            <div class="price-row">
+                                <span class="label">GST (18%)</span>
+                                <span class="value" id="gst-amount">₹0</span>
+                            </div>
+                        </div>
+
+                        <div class="total-box">
+                            <div class="total-label">Total Payable Amount</div>
+                            <div class="total-amount" id="summary-total">₹0</div>
+                            <div class="tax-note">Inclusive of all taxes</div>
+                        </div>
+
+                        <button class="pay-button" id="pay-amount-btn">
+                            <i class="fas fa-lock"></i>
+                            Proceed to Pay
+                        </button>
+
+                        <div class="security-section">
+                            <div class="lock-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <p>100% Secure Payment</p>
+                            <small>Protected by 256-bit SSL encryption</small>
+                        </div>
+
+                        <div class="trust-badges">
+                            <div class="trust-badge">
+                                <i class="fas fa-headset"></i>
+                                <span>24/7<br>Support</span>
+                            </div>
+                            <div class="trust-badge">
+                                <i class="fas fa-undo"></i>
+                                <span>Free<br>Cancellation</span>
+                            </div>
+                            <div class="trust-badge">
+                                <i class="fas fa-medal"></i>
+                                <span>Best Price<br>Guarantee</span>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <button class="pay-button" id="pay-amount-btn">
-                        <i class="fas fa-lock"></i>
-                        Pay Amount
-                    </button>
-
-                    <div class="secure-badge">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>100% Secure Payment with SSL Encryption</span>
-                    </div>
-
-                    <a href="index.html" class="back-link">
-                        <i class="fas fa-arrow-left"></i> Back to Home
+                <div class="back-link-container">
+                    <a href="javascript:history.back()" class="back-link">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back to Booking</span>
                     </a>
                 </div>
             </div>
@@ -308,10 +796,19 @@
             document.getElementById('summary-date').textContent = bookingData.date || 'To be confirmed';
             document.getElementById('summary-duration').textContent = bookingData.people || '--';
             
-            const totalAmount = bookingData.price || 0;
+            const basePrice = bookingData.price || 0;
+            const platformFee = 99;
+            const gst = Math.round(basePrice * 0.18);
+            const totalAmount = basePrice + platformFee + gst;
+            
+            document.getElementById('service-fee').textContent = `₹${basePrice.toLocaleString()}`;
+            document.getElementById('gst-amount').textContent = `₹${gst.toLocaleString()}`;
             document.getElementById('summary-total').textContent = `₹${totalAmount.toLocaleString()}`;
             
             document.getElementById('pay-amount-btn').addEventListener('click', function() {
+                // Update the pending booking with final amount
+                bookingData.finalAmount = totalAmount;
+                localStorage.setItem('pendingBooking', JSON.stringify(bookingData));
                 window.location.href = 'payment-dashboard.html';
             });
         });

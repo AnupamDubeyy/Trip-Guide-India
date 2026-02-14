@@ -24,7 +24,20 @@
             right: 0;
             bottom: 0;
             background: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
-            opacity: 0.1;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        /* Floating decorative elements */
+        .booking-page::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 122, 0, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
             pointer-events: none;
         }
 
@@ -33,144 +46,196 @@
             margin: 0 auto;
             padding: 40px 20px 60px;
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
+            grid-template-columns: 1fr 1.3fr;
             gap: 40px;
             align-items: start;
             position: relative;
             z-index: 1;
         }
 
-        /* Guide Info Card */
+        /* Guide Info Card - Enhanced */
         .guide-info-card {
             background: white;
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
             position: sticky;
             top: 100px;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .guide-info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15);
         }
 
         .guide-header {
-            background: linear-gradient(135deg, var(--accent-color), #e06800);
-            padding: 30px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #d45500 100%);
+            padding: 40px 30px 50px;
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        .guide-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            animation: shimmer 15s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .guide-header::after {
             content: '';
             position: absolute;
-            bottom: -20px;
+            bottom: -25px;
             left: 0;
             right: 0;
-            height: 40px;
+            height: 50px;
             background: white;
-            border-radius: 24px 24px 0 0;
+            border-radius: 28px 28px 0 0;
         }
 
         .guide-avatar {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 5px solid white;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             object-fit: cover;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .guide-info-card:hover .guide-avatar {
+            transform: scale(1.05);
         }
 
         .guide-header h2 {
             color: white;
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 5px;
+            font-size: 1.9rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
         }
 
         .guide-badge {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
             color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 25px;
             font-size: 0.85rem;
             font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 2;
         }
 
         .guide-details {
-            padding: 35px 30px 30px;
+            padding: 40px 30px 25px;
         }
 
         .guide-detail-item {
             display: flex;
             align-items: flex-start;
-            gap: 15px;
-            padding: 15px 0;
-            border-bottom: 1px solid #f0f2f5;
+            gap: 18px;
+            padding: 18px 15px;
+            border-radius: 16px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .guide-detail-item:hover {
+            background: linear-gradient(135deg, rgba(255, 122, 0, 0.05), rgba(255, 122, 0, 0.02));
+            transform: translateX(5px);
         }
 
         .guide-detail-item:last-child {
-            border-bottom: none;
+            margin-bottom: 0;
         }
 
         .guide-detail-item i {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 122, 0, 0.1);
-            border-radius: 10px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(255, 122, 0, 0.15), rgba(255, 122, 0, 0.08));
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--accent-color);
-            font-size: 1rem;
+            font-size: 1.1rem;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .guide-detail-item:hover i {
+            background: linear-gradient(135deg, var(--accent-color), #e06800);
+            color: white;
+            transform: scale(1.1) rotate(5deg);
         }
 
         .guide-detail-item .detail-content h4 {
-            font-size: 0.85rem;
-            color: #888;
-            font-weight: 500;
-            margin-bottom: 4px;
+            font-size: 0.8rem;
+            color: #999;
+            font-weight: 600;
+            margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         .guide-detail-item .detail-content p {
             color: var(--dark-text);
             font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .guide-rating {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 5px;
-        }
-
-        .guide-rating .stars {
-            color: #ffc107;
-        }
-
-        .guide-rating span {
-            color: #666;
-            font-size: 0.9rem;
+            font-size: 1.05rem;
         }
 
         .guide-price-display {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            margin: 20px 30px 30px;
-            padding: 20px;
-            border-radius: 15px;
+            background: linear-gradient(135deg, #f8f9fa, #eef1f5);
+            margin: 15px 25px 25px;
+            padding: 25px;
+            border-radius: 18px;
             text-align: center;
+            border: 2px dashed #e0e5eb;
+            position: relative;
+        }
+
+        .guide-price-display::before {
+            content: '💰';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 1.2rem;
         }
 
         .guide-price-display .price-label {
             font-size: 0.85rem;
             color: #888;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
 
         .guide-price-display .price-value {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--accent-color);
         }
@@ -181,34 +246,54 @@
             color: #888;
         }
 
-        /* Price Summary Box */
+        /* Price Summary Box - Enhanced */
         .price-summary {
             background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
-            margin: 0 30px 30px;
-            padding: 25px;
-            border-radius: 15px;
+            margin: 0 25px 25px;
+            padding: 28px;
+            border-radius: 18px;
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), #FF9A33, var(--accent-color));
         }
 
         .price-summary h4 {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .price-summary h4 i {
             color: var(--accent-color);
+            font-size: 1.1rem;
         }
 
         .price-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 12px 0;
             font-size: 0.95rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .price-row:hover {
+            padding-left: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
         }
 
         .price-row:last-of-type {
@@ -224,34 +309,41 @@
         }
 
         .price-row.total {
-            margin-top: 10px;
-            padding-top: 15px;
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            margin-top: 12px;
+            padding-top: 18px;
+            border-top: 2px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 122, 0, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px -10px -10px;
         }
 
         .price-row.total .label {
             font-weight: 700;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
         }
 
         .price-row.total .value {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--accent-color);
+            text-shadow: 0 2px 10px rgba(255, 122, 0, 0.3);
         }
 
-        /* Booking Form Card */
+        /* Booking Form Card - Enhanced */
         .booking-form-card {
             background: white;
-            border-radius: 24px;
+            border-radius: 28px;
             overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
         }
 
         .form-header {
             background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
-            padding: 35px 40px;
+            padding: 40px 45px;
             position: relative;
+            overflow: hidden;
         }
 
         .form-header::before {
@@ -261,85 +353,133 @@
             left: 0;
             right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #FF7A00, #FF9A33, #FF7A00);
+            background: linear-gradient(90deg, #FF7A00, #FF9A33, #FFB366, #FF9A33, #FF7A00);
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .form-header::after {
             content: '';
             position: absolute;
-            bottom: -20px;
+            bottom: -25px;
             left: 0;
             right: 0;
-            height: 40px;
+            height: 50px;
             background: white;
-            border-radius: 24px 24px 0 0;
+            border-radius: 28px 28px 0 0;
+        }
+
+        .form-header .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-header .back-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .form-header .back-link i {
+            font-size: 0.85rem;
         }
 
         .form-header h2 {
             color: white;
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: 2rem;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
+            position: relative;
+            z-index: 1;
         }
 
         .form-header h2 i {
-            background: var(--accent-color);
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-color), #d45500);
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 10px 25px rgba(255, 122, 0, 0.4);
         }
 
         .form-header p {
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 10px;
-            padding-left: 65px;
+            color: rgba(255, 255, 255, 0.75);
+            margin-top: 12px;
+            padding-left: 73px;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         .form-body {
-            padding: 40px;
+            padding: 50px 45px 45px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 28px;
+            position: relative;
         }
 
         .form-group label {
             display: block;
             font-weight: 600;
             color: var(--dark-text);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
 
         .form-group label i {
-            margin-right: 8px;
+            margin-right: 10px;
             color: var(--accent-color);
+            width: 18px;
+            text-align: center;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e8ecf1;
-            border-radius: 12px;
+            padding: 18px 22px;
+            border: 2px solid #e3e8ef;
+            border-radius: 14px;
             font-family: inherit;
             font-size: 1rem;
             transition: all 0.3s ease;
-            background: #f8f9fa;
+            background: #f8fafc;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #a0aec0;
         }
 
         .form-group input:hover,
         .form-group select:hover,
         .form-group textarea:hover {
-            border-color: #d0d5dc;
+            border-color: #cbd5e1;
             background: white;
         }
 
@@ -349,12 +489,12 @@
             outline: none;
             border-color: var(--accent-color);
             background: white;
-            box-shadow: 0 0 0 4px rgba(255, 122, 0, 0.1);
+            box-shadow: 0 0 0 5px rgba(255, 122, 0, 0.08), 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .form-group textarea {
             resize: vertical;
-            min-height: 100px;
+            min-height: 110px;
         }
 
         .form-group select {
@@ -362,114 +502,151 @@
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 18px center;
-            padding-right: 50px;
+            background-position: right 20px center;
+            padding-right: 55px;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 25px;
         }
 
         .form-buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 35px;
-            padding-top: 30px;
-            border-top: 2px solid #f0f2f5;
+            gap: 18px;
+            margin-top: 40px;
+            padding-top: 35px;
+            border-top: 2px solid #f0f3f7;
         }
 
         .btn-cancel {
             flex: 1;
-            padding: 18px;
-            border: 2px solid #e0e0e0;
+            padding: 20px;
+            border: 2px solid #e0e5eb;
             background: white;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            color: #666;
+            color: #64748b;
             text-decoration: none;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn-cancel:hover {
-            background: #f5f5f5;
-            border-color: #ccc;
+            background: #f8fafc;
+            border-color: #cbd5e1;
             color: var(--dark-text);
+            transform: translateY(-2px);
         }
 
         .btn-proceed {
-            flex: 1.5;
-            padding: 18px;
-            background: linear-gradient(135deg, var(--accent-color) 0%, #e06800 100%);
+            flex: 1.6;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #d45500 100%);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 14px;
+            font-size: 1.15rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(255, 122, 0, 0.3);
+            gap: 12px;
+            box-shadow: 0 8px 25px rgba(255, 122, 0, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-proceed::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-proceed:hover::before {
+            left: 100%;
         }
 
         .btn-proceed:hover {
-            background: linear-gradient(135deg, #e06800 0%, var(--primary-color) 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 122, 0, 0.4);
+            background: linear-gradient(135deg, #d45500 0%, #b34700 100%);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(255, 122, 0, 0.45);
         }
 
-        /* Security badges */
+        .btn-proceed:active {
+            transform: translateY(-2px);
+        }
+
+        /* Security badges - Enhanced */
         .security-info {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 25px;
+            gap: 35px;
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 16px;
             flex-wrap: wrap;
         }
 
         .security-info .badge {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: #888;
-            font-size: 0.85rem;
+            gap: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .security-info .badge:hover {
+            color: var(--dark-text);
+            transform: translateY(-2px);
         }
 
         .security-info .badge i {
-            color: #27ae60;
+            color: #10b981;
+            font-size: 1.1rem;
         }
 
-        /* Back button */
+        /* Back button - Enhanced */
         .back-link {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            color: rgba(255, 255, 255, 0.8);
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             font-weight: 500;
             margin-bottom: 30px;
+            padding: 10px 20px 10px 10px;
+            border-radius: 30px;
             transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .back-link:hover {
             color: white;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .back-link i {
-            width: 35px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.1);
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -479,17 +656,27 @@
 
         .back-link:hover i {
             background: var(--accent-color);
+            transform: translateX(-3px);
         }
 
-        /* Responsive */
-        @media (max-width: 968px) {
+        /* Responsive - Enhanced */
+        @media (max-width: 1024px) {
             .booking-container {
                 grid-template-columns: 1fr;
-                padding: 30px 15px 50px;
+                padding: 30px 20px 50px;
+                gap: 30px;
             }
 
             .guide-info-card {
                 position: static;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .booking-container {
+                padding: 25px 15px 40px;
             }
 
             .form-row {
@@ -498,11 +685,26 @@
             }
 
             .form-body {
-                padding: 30px 25px;
+                padding: 35px 25px 30px;
             }
 
             .form-header {
                 padding: 30px 25px;
+            }
+
+            .form-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .form-header h2 i {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+
+            .form-header p {
+                padding-left: 60px;
+                font-size: 0.9rem;
             }
 
             .form-buttons {
@@ -511,6 +713,36 @@
 
             .btn-proceed {
                 order: -1;
+            }
+
+            .security-info {
+                gap: 20px;
+                padding: 20px 15px;
+            }
+
+            .security-info .badge {
+                font-size: 0.8rem;
+            }
+
+            .guide-header {
+                padding: 30px 20px 45px;
+            }
+
+            .guide-details {
+                padding: 30px 20px 20px;
+            }
+
+            .guide-detail-item {
+                padding: 15px 10px;
+            }
+
+            .price-summary {
+                margin: 0 15px 20px;
+                padding: 22px;
+            }
+
+            .guide-price-display {
+                margin: 10px 15px 20px;
             }
         }
     </style>
@@ -599,11 +831,11 @@
 
             <!-- Booking Form Card -->
             <div class="booking-form-card">
-                <a href="javascript:history.back()" class="back-link" style="position: absolute; top: 100px; left: 20px; z-index: 10;">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Back to Guides</span>
-                </a>
                 <div class="form-header">
+                    <a href="javascript:history.back()" class="back-link">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back to Guides</span>
+                    </a>
                     <h2><i class="fas fa-calendar-check"></i> Book Your Tour</h2>
                     <p>Fill in your details to proceed with the booking</p>
                 </div>
@@ -788,27 +1020,12 @@
         document.getElementById('guide-specialty').textContent = guide.specialty;
         document.getElementById('guide-languages').textContent = guide.languages;
         document.getElementById('guide-locations').textContent = guide.location;
-        document.getElementById('guide-rating-text').textContent = `${guide.rating} (${guide.reviews} reviews)`;
         document.getElementById('guide-price').textContent = guide.price;
 
         // Set date if provided
         if (searchDate) {
             document.getElementById('booking-date').value = searchDate;
         }
-
-        // Generate stars
-        function generateStars(rating) {
-            const fullStars = Math.floor(rating);
-            const hasHalfStar = rating % 1 >= 0.5;
-            let html = '';
-            for (let i = 0; i < fullStars; i++) html += '<i class="fas fa-star"></i>';
-            if (hasHalfStar) html += '<i class="fas fa-star-half-alt"></i>';
-            const empty = 5 - fullStars - (hasHalfStar ? 1 : 0);
-            for (let i = 0; i < empty; i++) html += '<i class="far fa-star"></i>';
-            return html;
-        }
-
-        document.getElementById('guide-stars').innerHTML = generateStars(guide.rating);
 
         // Price calculation function
         function calculatePrice() {
