@@ -7,11 +7,216 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .payment-summary-page {
+            padding-top: 100px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .summary-container {
+            max-width: 550px;
+            width: 100%;
+            margin: 40px 20px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .summary-header {
+            background: linear-gradient(135deg, #0A1A3A 0%, #1a3a6a 100%);
+            padding: 35px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .summary-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: white;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .summary-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .summary-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+        }
+
+        .summary-body {
+            padding: 30px 40px 40px;
+        }
+
+        .booking-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .booking-detail:last-of-type {
+            border-bottom: none;
+        }
+
+        .booking-detail .label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .booking-detail .label i {
+            width: 35px;
+            height: 35px;
+            background: #f0f2f5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+        }
+
+        .booking-detail .value {
+            font-weight: 600;
+            color: var(--dark-text);
+            text-align: right;
+        }
+
+        .total-section {
+            margin-top: 25px;
+            padding: 25px;
+            background: linear-gradient(135deg, #fff5eb 0%, #ffefe0 100%);
+            border-radius: 16px;
+            border: 2px dashed var(--accent-color);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-row .label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .total-row .amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .pay-button {
+            width: 100%;
+            margin-top: 30px;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #e06800 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 6px 20px rgba(255, 122, 0, 0.35);
+        }
+
+        .pay-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 122, 0, 0.45);
+        }
+
+        .pay-button i {
+            font-size: 1.3rem;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .secure-badge i {
+            color: #28a745;
+            font-size: 1.2rem;
+        }
+
+        .secure-badge span {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+
+        .back-link i {
+            margin-right: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .summary-header {
+                padding: 30px 25px;
+            }
+
+            .summary-body {
+                padding: 25px;
+            }
+
+            .summary-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .total-row .amount {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav>
-        <div class="logo">Trip<span>Guide</span></div>
+        <a href="index.html" class="logo">Trip<span>Guide</span></a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="index.html#services">Services</a></li>
@@ -23,288 +228,93 @@
         </div>
     </nav>
 
-    <!-- Payment Section -->
-    <section class="payment-section">
-        <div class="payment-container">
-            <!-- Order Summary -->
-            <div class="order-summary">
-                <h2><i class="fas fa-receipt"></i> Booking Summary</h2>
-                <div class="summary-card">
-                    <div class="summary-item">
-                        <span class="label">Guide Name:</span>
+    <section class="payment-summary-page">
+        <div class="summary-container">
+            <div class="summary-card">
+                <div class="summary-header">
+                    <h1><i class="fas fa-receipt"></i> Booking Summary</h1>
+                    <p>Review your booking details before payment</p>
+                </div>
+                <div class="summary-body">
+                    <div class="booking-detail">
+                        <span class="label"><i class="fas fa-user-tie"></i> Guide</span>
                         <span class="value" id="summary-guide">--</span>
                     </div>
-                    <div class="summary-item">
-                        <span class="label">Customer:</span>
+                    <div class="booking-detail">
+                        <span class="label"><i class="fas fa-user"></i> Customer</span>
                         <span class="value" id="summary-customer">--</span>
                     </div>
-                    <div class="summary-item">
-                        <span class="label">Email:</span>
+                    <div class="booking-detail">
+                        <span class="label"><i class="fas fa-envelope"></i> Email</span>
                         <span class="value" id="summary-email">--</span>
                     </div>
-                    <div class="summary-item">
-                        <span class="label">Phone:</span>
+                    <div class="booking-detail">
+                        <span class="label"><i class="fas fa-phone"></i> Phone</span>
                         <span class="value" id="summary-phone">--</span>
                     </div>
-                    <div class="summary-item">
-                        <span class="label">Destination:</span>
+                    <div class="booking-detail">
+                        <span class="label"><i class="fas fa-map-marker-alt"></i> Destination</span>
                         <span class="value" id="summary-destination">--</span>
                     </div>
-                    <div class="summary-item">
-                        <span class="label">Date:</span>
+                    <div class="booking-detail">
+                        <span class="label"><i class="fas fa-calendar-alt"></i> Date</span>
                         <span class="value" id="summary-date">--</span>
                     </div>
-                    <div class="summary-item">
-                        <span class="label">Time:</span>
-                        <span class="value" id="summary-time">--</span>
+                    <div class="booking-detail">
+                        <span class="label"><i class="fas fa-clock"></i> Duration</span>
+                        <span class="value" id="summary-duration">--</span>
                     </div>
-                    <div class="summary-item">
-                        <span class="label">Group Size:</span>
-                        <span class="value" id="summary-people">--</span>
-                    </div>
-                    <div class="summary-divider"></div>
-                    <div class="summary-item total">
-                        <span class="label">Total Amount:</span>
-                        <span class="value" id="summary-total">₹0</span>
-                    </div>
-                </div>
-                <div class="secure-badge">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>100% Secure Payment</span>
-                </div>
-            </div>
 
-            <!-- Payment Options -->
-            <div class="payment-options">
-                <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
-                
-                <!-- Payment Method Tabs -->
-                <div class="payment-tabs">
-                    <button class="payment-tab active" data-method="card">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Card</span>
-                    </button>
-                    <button class="payment-tab" data-method="upi">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>UPI</span>
-                    </button>
-                    <button class="payment-tab" data-method="netbanking">
-                        <i class="fas fa-university"></i>
-                        <span>Net Banking</span>
-                    </button>
-                    <button class="payment-tab" data-method="wallet">
-                        <i class="fas fa-wallet"></i>
-                        <span>Wallet</span>
-                    </button>
-                </div>
-
-                <!-- Card Payment Form -->
-                <div class="payment-form card-form active" id="card-form">
-                    <div class="card-icons">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png" alt="Mastercard">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/200px-American_Express_logo_%282018%29.svg.png" alt="Amex">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/RuPay-Logo.png/200px-RuPay-Logo.png" alt="RuPay">
-                    </div>
-                    <form id="card-payment-form">
-                        <div class="form-group">
-                            <label for="card-number">Card Number</label>
-                            <div class="input-with-icon">
-                                <i class="fas fa-credit-card"></i>
-                                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
-                            </div>
+                    <div class="total-section">
+                        <div class="total-row">
+                            <span class="label">Total Amount</span>
+                            <span class="amount" id="summary-total">₹0</span>
                         </div>
-                        <div class="form-group">
-                            <label for="card-name">Cardholder Name</label>
-                            <div class="input-with-icon">
-                                <i class="fas fa-user"></i>
-                                <input type="text" id="card-name" placeholder="John Doe" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group half">
-                                <label for="card-expiry">Expiry Date</label>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-calendar"></i>
-                                    <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required>
-                                </div>
-                            </div>
-                            <div class="form-group half">
-                                <label for="card-cvv">CVV</label>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-lock"></i>
-                                    <input type="password" id="card-cvv" placeholder="•••" maxlength="4" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="save-card">
-                            <input type="checkbox" id="save-card">
-                            <label for="save-card">Save this card for future payments</label>
-                        </div>
-                        <button type="submit" class="pay-btn">
-                            <i class="fas fa-lock"></i> Pay Securely <span id="card-pay-amount">₹0</span>
-                        </button>
-                    </form>
-                </div>
+                    </div>
 
-                <!-- UPI Payment Form -->
-                <div class="payment-form upi-form" id="upi-form">
-                    <div class="upi-apps">
-                        <button class="upi-app" data-app="gpay">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/200px-Google_Pay_Logo.svg.png" alt="Google Pay">
-                            <span>Google Pay</span>
-                        </button>
-                        <button class="upi-app" data-app="phonepe">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/PhonePe_Logo.svg/200px-PhonePe_Logo.svg.png" alt="PhonePe">
-                            <span>PhonePe</span>
-                        </button>
-                        <button class="upi-app" data-app="paytm">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Paytm_Logo_%28standalone%29.svg/200px-Paytm_Logo_%28standalone%29.svg.png" alt="Paytm">
-                            <span>Paytm</span>
-                        </button>
-                        <button class="upi-app" data-app="bhim">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/200px-UPI-Logo-vector.svg.png" alt="BHIM UPI">
-                            <span>BHIM UPI</span>
-                        </button>
-                    </div>
-                    <div class="upi-divider">
-                        <span>OR</span>
-                    </div>
-                    <form id="upi-payment-form">
-                        <div class="form-group">
-                            <label for="upi-id">Enter UPI ID</label>
-                            <div class="input-with-icon">
-                                <i class="fas fa-at"></i>
-                                <input type="text" id="upi-id" placeholder="yourname@upi" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="pay-btn">
-                            <i class="fas fa-check-circle"></i> Verify & Pay <span id="upi-pay-amount">₹0</span>
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Net Banking Form -->
-                <div class="payment-form netbanking-form" id="netbanking-form">
-                    <p class="form-subtitle">Select your bank</p>
-                    <div class="bank-list">
-                        <button class="bank-option" data-bank="sbi">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/SBI-logo.svg/200px-SBI-logo.svg.png" alt="SBI">
-                            <span>State Bank of India</span>
-                        </button>
-                        <button class="bank-option" data-bank="hdfc">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/HDFC_Bank_Logo.svg/200px-HDFC_Bank_Logo.svg.png" alt="HDFC">
-                            <span>HDFC Bank</span>
-                        </button>
-                        <button class="bank-option" data-bank="icici">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/ICICI_Bank_Logo.svg/200px-ICICI_Bank_Logo.svg.png" alt="ICICI">
-                            <span>ICICI Bank</span>
-                        </button>
-                        <button class="bank-option" data-bank="axis">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Axis_Bank_logo.svg/200px-Axis_Bank_logo.svg.png" alt="Axis">
-                            <span>Axis Bank</span>
-                        </button>
-                        <button class="bank-option" data-bank="kotak">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Kotak_Mahindra_Bank_logo.svg/200px-Kotak_Mahindra_Bank_logo.svg.png" alt="Kotak">
-                            <span>Kotak Mahindra</span>
-                        </button>
-                        <button class="bank-option" data-bank="pnb">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Punjab_national_bank.svg/200px-Punjab_national_bank.svg.png" alt="PNB">
-                            <span>Punjab National Bank</span>
-                        </button>
-                    </div>
-                    <div class="other-bank">
-                        <label for="other-bank-select">Or select from all banks:</label>
-                        <select id="other-bank-select">
-                            <option value="">-- Select Bank --</option>
-                            <option value="bob">Bank of Baroda</option>
-                            <option value="canara">Canara Bank</option>
-                            <option value="union">Union Bank of India</option>
-                            <option value="indian">Indian Bank</option>
-                            <option value="idbi">IDBI Bank</option>
-                            <option value="yes">Yes Bank</option>
-                            <option value="indusind">IndusInd Bank</option>
-                            <option value="federal">Federal Bank</option>
-                        </select>
-                    </div>
-                    <button type="button" class="pay-btn" id="netbanking-pay-btn">
-                        <i class="fas fa-university"></i> Proceed to Pay <span id="netbanking-pay-amount">₹0</span>
-                    </button>
-                </div>
-
-                <!-- Wallet Payment Form -->
-                <div class="payment-form wallet-form" id="wallet-form">
-                    <p class="form-subtitle">Select your wallet</p>
-                    <div class="wallet-list">
-                        <button class="wallet-option" data-wallet="paytm">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Paytm_Logo_%28standalone%29.svg/200px-Paytm_Logo_%28standalone%29.svg.png" alt="Paytm">
-                            <span>Paytm Wallet</span>
-                        </button>
-                        <button class="wallet-option" data-wallet="amazonpay">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/200px-Amazon_logo.svg.png" alt="Amazon Pay">
-                            <span>Amazon Pay</span>
-                        </button>
-                        <button class="wallet-option" data-wallet="mobikwik">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/MobiKwik_Logo.svg/200px-MobiKwik_Logo.svg.png" alt="MobiKwik">
-                            <span>MobiKwik</span>
-                        </button>
-                        <button class="wallet-option" data-wallet="freecharge">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Freecharge.svg/200px-Freecharge.svg.png" alt="Freecharge">
-                            <span>Freecharge</span>
-                        </button>
-                    </div>
-                    <button type="button" class="pay-btn" id="wallet-pay-btn">
-                        <i class="fas fa-wallet"></i> Pay with Wallet <span id="wallet-pay-amount">₹0</span>
-                    </button>
-                </div>
-
-                <!-- Security Badges -->
-                <div class="security-badges">
-                    <div class="badge">
+                    <button class="pay-button" id="pay-amount-btn">
                         <i class="fas fa-lock"></i>
-                        <span>256-bit SSL Encryption</span>
-                    </div>
-                    <div class="badge">
+                        Pay Amount
+                    </button>
+
+                    <div class="secure-badge">
                         <i class="fas fa-shield-alt"></i>
-                        <span>PCI DSS Compliant</span>
+                        <span>100% Secure Payment with SSL Encryption</span>
                     </div>
-                    <div class="badge">
-                        <i class="fas fa-check-circle"></i>
-                        <span>100% Secure</span>
-                    </div>
+
+                    <a href="index.html" class="back-link">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Payment Success Modal -->
-    <div class="payment-modal" id="payment-success-modal">
-        <div class="payment-modal-content success">
-            <div class="modal-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h2>Payment Successful!</h2>
-            <p>Your booking has been confirmed.</p>
-            <div class="booking-id">
-                Booking ID: <span id="booking-id">TG123456</span>
-            </div>
-            <p class="confirmation-text">A confirmation email has been sent to your registered email address.</p>
-            <button class="modal-btn" onclick="window.location.href='index.html'">
-                <i class="fas fa-home"></i> Back to Home
-            </button>
-        </div>
-    </div>
-
-    <!-- Processing Modal -->
-    <div class="payment-modal" id="processing-modal">
-        <div class="payment-modal-content processing">
-            <div class="loader"></div>
-            <h2>Processing Payment</h2>
-            <p>Please wait while we process your payment...</p>
-            <p class="warning-text"><i class="fas fa-exclamation-triangle"></i> Do not close or refresh this page</p>
-        </div>
-    </div>
-
-    <script src="payment.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingData = JSON.parse(localStorage.getItem('pendingBooking'));
+            
+            if (!bookingData) {
+                alert('No booking data found. Please make a booking first.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            document.getElementById('summary-guide').textContent = bookingData.guide || '--';
+            document.getElementById('summary-customer').textContent = bookingData.name || '--';
+            document.getElementById('summary-email').textContent = bookingData.email || '--';
+            document.getElementById('summary-phone').textContent = bookingData.phone || '--';
+            document.getElementById('summary-destination').textContent = bookingData.destination || '--';
+            document.getElementById('summary-date').textContent = bookingData.date || 'To be confirmed';
+            document.getElementById('summary-duration').textContent = bookingData.people || '--';
+            
+            const totalAmount = bookingData.price || 0;
+            document.getElementById('summary-total').textContent = `₹${totalAmount.toLocaleString()}`;
+            
+            document.getElementById('pay-amount-btn').addEventListener('click', function() {
+                window.location.href = 'payment-dashboard.html';
+            });
+        });
+    </script>
 </body>
 </html>
