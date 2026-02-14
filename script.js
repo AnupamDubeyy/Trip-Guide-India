@@ -47,9 +47,19 @@ function logout() {
     location.reload();
 }
 
+// Set minimum date for all date inputs to today
+function setMinDateToToday() {
+    const today = new Date().toISOString().split('T')[0];
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    dateInputs.forEach(input => {
+        input.setAttribute('min', today);
+    });
+}
+
 // Add event listeners
 document.addEventListener('DOMContentLoaded', function() {
     checkUserLogin();
+    setMinDateToToday();
     
     // Dropdown toggle
     const userDropdown = document.querySelector('.user-dropdown');

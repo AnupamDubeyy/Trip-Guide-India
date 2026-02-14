@@ -1265,9 +1265,19 @@
             location.reload();
         });
 
+        // Set minimum date for date inputs
+        function setMinDateToToday() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            dateInputs.forEach(input => {
+                input.setAttribute('min', today);
+            });
+        }
+
         // Initialize
         checkUserLogin();
         filterAndDisplayHotels();
+        setMinDateToToday();
     </script>
 </body>
 </html>
