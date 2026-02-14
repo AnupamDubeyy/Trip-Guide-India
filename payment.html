@@ -168,65 +168,59 @@
         }
 
         .details-grid {
-            padding: 30px 35px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .detail-card {
+            padding: 25px 30px;
             background: linear-gradient(135deg, #f8f9fc 0%, #f3f5f9 100%);
             border-radius: 16px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
+            margin: 0 25px 25px;
         }
 
-        .detail-card:hover {
-            background: white;
-            border-color: rgba(255, 122, 0, 0.15);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-            transform: translateY(-3px);
+        .detail-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
         }
 
-        .detail-card .card-icon {
-            width: 50px;
-            height: 50px;
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-row .row-icon {
+            width: 36px;
+            height: 36px;
             background: white;
-            border-radius: 14px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--accent-color);
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            margin-right: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            flex-shrink: 0;
         }
 
-        .detail-card:hover .card-icon {
-            background: linear-gradient(135deg, var(--accent-color), #e06800);
-            color: white;
-            transform: scale(1.1);
+        .detail-row .row-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
         }
 
-        .detail-card .card-label {
-            font-size: 0.85rem;
+        .detail-row .row-label {
+            font-size: 0.8rem;
             color: #888;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 8px;
         }
 
-        .detail-card .card-value {
-            font-size: 1.1rem;
+        .detail-row .row-value {
+            font-size: 1rem;
             font-weight: 600;
             color: var(--dark-text);
+            text-align: right;
             word-break: break-word;
-        }
-
-        .detail-card.full-width {
-            grid-column: span 2;
         }
 
         /* Guide Info Card */
@@ -551,14 +545,6 @@
             .payment-summary-section {
                 position: static;
             }
-
-            .details-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .detail-card.full-width {
-                grid-column: span 1;
-            }
         }
 
         @media (max-width: 768px) {
@@ -581,7 +567,18 @@
             }
 
             .details-grid {
-                padding: 25px 20px;
+                padding: 20px;
+                margin: 0 15px 20px;
+            }
+
+            .detail-row .row-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .detail-row .row-value {
+                text-align: left;
             }
 
             .guide-highlight {
@@ -660,52 +657,47 @@
 
                 <!-- Details Grid -->
                 <div class="details-grid">
-                    <div class="detail-card">
-                        <div class="card-icon">
-                            <i class="fas fa-user"></i>
+                    <div class="detail-row">
+                        <div class="row-icon"><i class="fas fa-user"></i></div>
+                        <div class="row-content">
+                            <span class="row-label">Customer</span>
+                            <span class="row-value" id="summary-customer">--</span>
                         </div>
-                        <div class="card-label">Customer Name</div>
-                        <div class="card-value" id="summary-customer">--</div>
                     </div>
-
-                    <div class="detail-card">
-                        <div class="card-icon">
-                            <i class="fas fa-phone"></i>
+                    <div class="detail-row">
+                        <div class="row-icon"><i class="fas fa-phone"></i></div>
+                        <div class="row-content">
+                            <span class="row-label">Phone</span>
+                            <span class="row-value" id="summary-phone">--</span>
                         </div>
-                        <div class="card-label">Phone Number</div>
-                        <div class="card-value" id="summary-phone">--</div>
                     </div>
-
-                    <div class="detail-card full-width">
-                        <div class="card-icon">
-                            <i class="fas fa-envelope"></i>
+                    <div class="detail-row">
+                        <div class="row-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="row-content">
+                            <span class="row-label">Email</span>
+                            <span class="row-value" id="summary-email">--</span>
                         </div>
-                        <div class="card-label">Email Address</div>
-                        <div class="card-value" id="summary-email">--</div>
                     </div>
-
-                    <div class="detail-card">
-                        <div class="card-icon">
-                            <i class="fas fa-map-marker-alt"></i>
+                    <div class="detail-row">
+                        <div class="row-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="row-content">
+                            <span class="row-label">Destination</span>
+                            <span class="row-value" id="summary-destination">--</span>
                         </div>
-                        <div class="card-label">Destination</div>
-                        <div class="card-value" id="summary-destination">--</div>
                     </div>
-
-                    <div class="detail-card">
-                        <div class="card-icon">
-                            <i class="fas fa-calendar-alt"></i>
+                    <div class="detail-row">
+                        <div class="row-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="row-content">
+                            <span class="row-label">Tour Date</span>
+                            <span class="row-value" id="summary-date">--</span>
                         </div>
-                        <div class="card-label">Tour Date</div>
-                        <div class="card-value" id="summary-date">--</div>
                     </div>
-
-                    <div class="detail-card">
-                        <div class="card-icon">
-                            <i class="fas fa-users"></i>
+                    <div class="detail-row">
+                        <div class="row-icon"><i class="fas fa-users"></i></div>
+                        <div class="row-content">
+                            <span class="row-label">Duration</span>
+                            <span class="row-value" id="summary-duration">--</span>
                         </div>
-                        <div class="card-label">Group Size</div>
-                        <div class="card-value" id="summary-duration">--</div>
                     </div>
                 </div>
             </div>
